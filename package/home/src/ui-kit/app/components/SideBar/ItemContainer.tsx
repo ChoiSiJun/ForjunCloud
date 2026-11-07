@@ -5,7 +5,7 @@ import { useAppSelector } from 'store/ReduxHooks';
 import React from 'react';
 
 const ItemContainer = () => {
-  //현재 패키지 Module 정보 가져오기
+  // 현재 패키지 Module 정보 가져오기
   const MenuInfo = useAppSelector(state => state.Menu);
   const PackageInfo = MenuInfo.packageList[MenuInfo.accessPackageIndex];
 

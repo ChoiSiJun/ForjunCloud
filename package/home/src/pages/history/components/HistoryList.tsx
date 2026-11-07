@@ -89,10 +89,10 @@ const HistoryList = ({ category }: HistoryListProps) => {
             }
           }}
         >
-          <Box textAlign={'right'} onClick={e => e.stopPropagation()}>
+          <Box textAlign="right" onClick={e => e.stopPropagation()}>
             <SjButton
-              ButtonType={'confirm'}
-              buttonName={'수정'}
+              ButtonType="confirm"
+              buttonName="수정"
               onClick={e => {
                 e.stopPropagation();
                 dispatch(
@@ -109,8 +109,8 @@ const HistoryList = ({ category }: HistoryListProps) => {
               }}
             />
             <SjButton
-              ButtonType={'delete'}
-              buttonName={'삭제'}
+              ButtonType="delete"
+              buttonName="삭제"
               onClick={e => {
                 e.stopPropagation();
                 dispatch(

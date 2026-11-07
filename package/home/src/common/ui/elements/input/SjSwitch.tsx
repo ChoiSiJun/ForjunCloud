@@ -42,7 +42,7 @@ const SjSwitch = ({
         color={color}
       />
     );
-  } else {
+  } 
     return (
       <FormControlLabel
         label={label}
@@ -57,7 +57,7 @@ const SjSwitch = ({
         }
       />
     );
-  }
+  
 };
 
 export default SjSwitch;

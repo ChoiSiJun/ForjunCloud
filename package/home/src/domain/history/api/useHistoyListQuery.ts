@@ -9,7 +9,7 @@ type HistoryListResponse = GetResponseType<typeof HISTORY_API_ENDPOINTS.get>;
 const fetchHistoryList = async (params: HistoryListRequest): Promise<HistoryListResponse[]> => {
   const response = await axios({
     method: HISTORY_API_ENDPOINTS.get.method,
-    params: params,
+    params,
     url: HISTORY_API_ENDPOINTS.get.url,
   });
 

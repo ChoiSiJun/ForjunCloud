@@ -17,7 +17,7 @@ const useHistory = (category: 'SI' | 'SM' | 'RND' | 'TOY') => {
 
   /** Mutation & Query */
   const queryClient = useQueryClient();
-  const getHistoryList = useHistoryListQuery({ category: category }).data;
+  const getHistoryList = useHistoryListQuery({ category }).data;
   const insertHistory = useInsertHistoryMutation().mutateAsync;
   const updateHistory = useUpdateHistoryMutation().mutateAsync;
   const deleteHistory = useDeleteHistoryMutation().mutateAsync;
@@ -53,7 +53,7 @@ const useHistory = (category: 'SI' | 'SM' | 'RND' | 'TOY') => {
   /** 날짜 포맷팅 */
   const formatDate = (dateStr: string) => {
     const date = new Date(dateStr);
-    return isNaN(date.getTime()) ? '-' : date.toLocaleDateString();
+    return Number.isNaN(date.getTime()) ? '-' : date.toLocaleDateString();
   };
 
   return {

@@ -2,10 +2,9 @@ import { ListSubheader, styled, alpha } from '@mui/material';
 
 interface NavGroupProps {
   name: string;
-  path?: string;
 }
 
-//스타일 컴포넌트 재구성
+// 스타일 컴포넌트 재구성
 const ListSubheaderStyled = styled(ListSubheader)(({ theme }) => ({
   ...theme.typography.subtitle2,
   fontWeight: 600,
@@ -31,7 +30,7 @@ const ListSubheaderStyled = styled(ListSubheader)(({ theme }) => ({
   },
 }));
 
-//렌더링
+// 렌더링
 const NavGroup = ({ name }: NavGroupProps) => {
   return <ListSubheaderStyled disableSticky>{name}</ListSubheaderStyled>;
 };

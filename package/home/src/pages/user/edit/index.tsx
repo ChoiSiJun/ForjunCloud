@@ -77,7 +77,7 @@ const UserEdit = () => {
           </Grid>
         </Paper>
 
-        <SjButton ButtonType={'submit'} buttonName={'수정하기'} />
+        <SjButton ButtonType="submit" buttonName="수정하기" />
       </Box>
     </form>
   );

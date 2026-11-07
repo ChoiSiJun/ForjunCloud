@@ -84,6 +84,9 @@ const SjButton = ({
     case 'etc':
       variant = 'outlined';
       break;
+
+    default:
+      break;
   }
 
   // 3. ButtonStyled를 한 번만 렌더링

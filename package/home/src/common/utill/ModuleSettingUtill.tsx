@@ -8,7 +8,7 @@ const ModuleSettingUtill = () => {
 
   dispatch(menuAccess(location));
 
-  return <></>;
+  return null;
 };
 
 export default ModuleSettingUtill;

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import SjCard from './SjCard';
 import { Button } from '@mui/material';
+import SjCard from './SjCard';
 
 const meta: Meta<typeof SjCard> = {
   title: 'Common/UI/Modules/SjCard',

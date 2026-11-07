@@ -10,7 +10,7 @@ import SjTextField from '@common/ui/elements/input/SjTextField';
 // Hooks
 import useAuth from '@domain/user/hooks/useAuth';
 
-//Types
+// Types
 import { JoinUserRequest } from '@domain/user/api/userApi';
 
 // Props Interface
@@ -29,11 +29,6 @@ export default function Join({ joinOpen, handleJoin }: JoinProps) {
   const { join, duplicateIdCheck, isDuplicateIdChecking, isIdAvailable, setIsIdAvailable } = useAuth();
 
   // 아이디 입력값이 변경될 때 호출되는 핸들러
-  const handleUserIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    joinForm.handleChange(e);
-    setIsIdAvailable(null);
-  };
-
   // Formik을 이용한 폼 데이터 및 유효성 검사 관리
   const joinForm = useFormik<JoinUserRequest>({
     initialValues: {
@@ -60,6 +55,11 @@ export default function Join({ joinOpen, handleJoin }: JoinProps) {
     },
     validateOnChange: true,
   });
+
+  const handleUserIdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    joinForm.handleChange(event);
+    setIsIdAvailable(null);
+  };
 
   return (
     <Drawer
@@ -112,7 +112,7 @@ export default function Join({ joinOpen, handleJoin }: JoinProps) {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end" sx={{ margin: 0, padding: 0 }}>
-                      <SjButton ButtonType={'input'} buttonName={'중복체크'} onClick={() => duplicateIdCheck({ userId: joinForm.values.userId })} disabled={isDuplicateIdChecking} />
+                      <SjButton ButtonType="input" buttonName="중복체크" onClick={() => duplicateIdCheck({ userId: joinForm.values.userId })} disabled={isDuplicateIdChecking} />
                     </InputAdornment>
                   ),
                 }}
@@ -159,7 +159,7 @@ export default function Join({ joinOpen, handleJoin }: JoinProps) {
 
           {/* Submit Button */}
           <Box textAlign="center" mt={4}>
-            <SjButton ButtonType={'confirm'} buttonName={'가입'} onClick={() => joinForm.handleSubmit()} />
+            <SjButton ButtonType="confirm" buttonName="가입" onClick={() => joinForm.handleSubmit()} />
           </Box>
         </Paper>
       </Box>

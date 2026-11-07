@@ -29,7 +29,7 @@ const Register = <T extends HistorySaveRequest | HistoryUpdateRequest>({ onClick
   /** Hook */
   const registerForm = useFormik<HistorySaveRequest | HistoryUpdateRequest>({
     initialValues: {
-      ...(isEditMode && id ? { id: id } : {}),
+      ...(isEditMode && id ? { id } : {}),
       category: catagory,
       project: '',
       subject: '',
@@ -105,33 +105,33 @@ const Register = <T extends HistorySaveRequest | HistoryUpdateRequest>({ onClick
               { name: 'TOY', value: 'TOY' },
             ]}
             defaultValue={registerForm.values.category}
-            label={'유형'}
-            name={'category'}
+            label="유형"
+            name="category"
             onChange={registerForm.handleChange}
           />
         </Grid>
         <Grid item xs={12} sm={12} md={12} margin={1}>
-          <SjTextField label={'프로젝트'} name={'project'} value={registerForm.values.project} onChange={registerForm.handleChange} />
+          <SjTextField label="프로젝트" name="project" value={registerForm.values.project} onChange={registerForm.handleChange} />
         </Grid>
 
         <Grid item xs={12} sm={12} md={12} margin={1}>
-          <SjTextField label={'주제'} name={'subject'} value={registerForm.values.subject} onChange={registerForm.handleChange} />
+          <SjTextField label="주제" name="subject" value={registerForm.values.subject} onChange={registerForm.handleChange} />
         </Grid>
 
         <Grid item xs={12} sm={12} md={12} margin={1}>
-          <SjDatePicker label={'시작날짜'} onDateChange={onChangeStartDate} initialDate={startDate} />
+          <SjDatePicker label="시작날짜" onDateChange={onChangeStartDate} initialDate={startDate} />
         </Grid>
 
         <Grid item xs={12} sm={12} md={12} margin={1}>
-          <SjDatePicker label={'종료날짜'} onDateChange={onChangeEndDate} initialDate={endDate} />
+          <SjDatePicker label="종료날짜" onDateChange={onChangeEndDate} initialDate={endDate} />
         </Grid>
 
         <Grid item xs={12} sm={12} md={12} margin={1}>
-          <SjInputList label={'SKill'} name={'skill'} listHeight={90} onChangeList={onChangeSkillList} initialList={skillList} />
+          <SjInputList label="SKill" name="skill" listHeight={90} onChangeList={onChangeSkillList} initialList={skillList} />
         </Grid>
 
         <Grid item xs={12} sm={12} md={12} margin={1}>
-          <BoardEditor value={description} setValue={setDescription} directory={'history'} />
+          <BoardEditor value={description} setValue={setDescription} directory="history" />
         </Grid>
 
         <Grid item xs={12} sm={12} md={12} margin={1}>

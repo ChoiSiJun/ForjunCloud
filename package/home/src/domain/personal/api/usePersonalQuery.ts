@@ -1,8 +1,8 @@
 // personalApi.ts 파일에 정의된 EndPoint 객체와 타입 가져오기
 import axios from '@config/axios/axios';
 import { useQueryWithLoading } from '@config/hooks/useQueryWithLoading';
-import { PERSONAL_API_ENDPOINTS } from './personalApi';
 import { GetResponseType } from '@common/utill/type-utils';
+import { PERSONAL_API_ENDPOINTS } from './personalApi';
 
 const END_POINT = PERSONAL_API_ENDPOINTS.get;
 

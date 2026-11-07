@@ -1,7 +1,7 @@
 import axios from '@config/axios/axios';
 import { useQueryWithLoading } from '@config/hooks/useQueryWithLoading';
-import { USER_API_ENDPOINTS } from './userApi';
 import { GetResponseType } from '@common/utill/type-utils';
+import { USER_API_ENDPOINTS } from './userApi';
 
 const END_POINT = USER_API_ENDPOINTS.get;
 

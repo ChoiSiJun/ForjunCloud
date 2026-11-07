@@ -1,8 +1,8 @@
 import axios from '@config/axios/axios';
 import { useMutationWithLoading } from '@config/hooks/useMutationWithLoading';
 import { AxiosError } from 'axios';
-import { USER_API_ENDPOINTS } from './userApi';
 import { GetRequestType } from '@common/utill/type-utils';
+import { USER_API_ENDPOINTS } from './userApi';
 
 type UpdateUserParams = GetRequestType<typeof USER_API_ENDPOINTS.update>;
 

@@ -60,7 +60,7 @@ const BoardEditor = ({ value = '', setValue, placeholder = '내용을 입력해�
         previewStyle="vertical" // 미리보기 스타일 (tab, vertical)
         height="500px"
         initialEditType="wysiwyg" // 초기 에디터 모드 (markdown, wysiwyg)
-        useCommandShortcut={true} // 단축키 사용 여부
+        useCommandShortcut // 단축키 사용 여부
         onChange={handleChange}
         initialValue={value}
         hooks={{

@@ -19,7 +19,7 @@ const SjSelectBox = ({ layout = undefined, menuItem, defaultValue, label, onChan
   return (
     <FormControl variant={layout} fullWidth>
       <InputLabel id="demo-simple-select-label">{label}</InputLabel>
-      <Select labelId={label + '_labelid'} id={label + '_id'} value={defaultValue} label={label} name={name} inputRef={inputRef} onChange={onChange}>
+      <Select labelId={`${label  }_labelid`} id={`${label  }_id`} value={defaultValue} label={label} name={name} inputRef={inputRef} onChange={onChange}>
         {menuItem.map(item => (
           <MenuItem value={item.value} selected={defaultValue === item.value} key={item.value}>
             {item.name}

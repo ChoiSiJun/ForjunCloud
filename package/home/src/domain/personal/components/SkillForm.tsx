@@ -74,16 +74,16 @@ const SkillForm = ({ personalHook }: SkillFormProps) => {
 
   return (
     <Paper sx={{ p: 3 }}>
-      <SjText renderType="title" text={'기술내역'} />
+      <SjText renderType="title" text="기술내역" />
 
       <Grid container spacing={1} alignItems="center" sx={{ mb: 2 }}>
         <Grid item xs={4}>
-          <SjTextField id="skill-category-input" label={'기술 카테고리'} value={skillCategory} onChange={handleCategoryChange} onKeyDown={handleCategoryKeyDown} placeholder="예: 프론트엔드" />
+          <SjTextField id="skill-category-input" label="기술 카테고리" value={skillCategory} onChange={handleCategoryChange} onKeyDown={handleCategoryKeyDown} placeholder="예: 프론트엔드" />
         </Grid>
         <Grid item xs={6}>
           <SjTextField
             id="skill-name-input"
-            label={'기술명 (Enter 또는 버튼으로 등록)'}
+            label="기술명 (Enter 또는 버튼으로 등록)"
             value={skillName}
             onChange={handleSkillNameChange}
             onKeyDown={handleSkillNameKeyDown}
@@ -91,7 +91,7 @@ const SkillForm = ({ personalHook }: SkillFormProps) => {
           />
         </Grid>
         <Grid item xs={2}>
-          <SjButton ButtonType={'input'} buttonName={'추가'} onClick={handleAddItem} />
+          <SjButton ButtonType="input" buttonName="추가" onClick={handleAddItem} />
         </Grid>
       </Grid>
 
@@ -122,7 +122,7 @@ const SkillForm = ({ personalHook }: SkillFormProps) => {
             dataList={skillList.map(item => item.skillName)}
             onDelete={chipIndex => {
               // chipIndex는 해당 카테고리 내의 인덱스이므로, 원본 배열의 인덱스로 변환
-              const originalIndex = skillList[chipIndex].originalIndex;
+              const {originalIndex} = skillList[chipIndex];
               handleRemoveListItem('skills', originalIndex);
             }}
           />

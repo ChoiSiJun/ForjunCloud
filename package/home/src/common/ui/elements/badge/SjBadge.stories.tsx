@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import SjBadge from './SjBadge';
 import { IconButton } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MailIcon from '@mui/icons-material/Mail';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import SjBadge from './SjBadge';
 
 const meta: Meta<typeof SjBadge> = {
   title: 'Common/UI/Elements/SjBadge',

@@ -1,7 +1,7 @@
 import { useQueryWithLoading } from '@config/hooks/useQueryWithLoading';
-import { HISTORY_API_ENDPOINTS } from './HistoryApi';
 import { GetRequestType, GetResponseType } from '@common/utill/type-utils';
 import axios from '@config/axios/axios';
+import { HISTORY_API_ENDPOINTS } from './HistoryApi';
 
 type HistoryQueryRequest = GetRequestType<typeof HISTORY_API_ENDPOINTS.getDetail>;
 type HistoryQueryResponse = GetResponseType<typeof HISTORY_API_ENDPOINTS.getDetail>;
@@ -9,7 +9,7 @@ type HistoryQueryResponse = GetResponseType<typeof HISTORY_API_ENDPOINTS.getDeta
 const fetchHistory = async (params: HistoryQueryRequest): Promise<HistoryQueryResponse> => {
   const response = await axios({
     method: HISTORY_API_ENDPOINTS.getDetail.method,
-    url: HISTORY_API_ENDPOINTS.getDetail.url + `/${params.id}`,
+    url: `${HISTORY_API_ENDPOINTS.getDetail.url  }/${params.id}`,
     data: params,
   });
 

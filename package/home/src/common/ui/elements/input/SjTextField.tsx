@@ -30,6 +30,7 @@ const SjTextField = ({
   value,
   textFieldType = 'outlined-basic',
   InputProps,
+  InputRef,
   onChange,
   onBlur,
   onKeyDown,
@@ -65,6 +66,7 @@ const SjTextField = ({
       value={value}
       helperText={helperText}
       InputProps={InputProps}
+      inputRef={InputRef}
       size={size}
       fullWidth
       sx={sx}

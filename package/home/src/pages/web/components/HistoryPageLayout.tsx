@@ -8,7 +8,7 @@ import { Box } from '@mui/material';
 
 const formatDate = (dateStr: string) => {
   const date = new Date(dateStr);
-  return isNaN(date.getTime()) ? '-' : date.toLocaleDateString();
+  return Number.isNaN(date.getTime()) ? '-' : date.toLocaleDateString();
 };
 
 interface HistoryPageLayoutProps {

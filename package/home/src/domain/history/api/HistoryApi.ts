@@ -15,39 +15,39 @@ export interface HistoryPublicListRequest extends Pick<History, 'userId' | 'cate
 export interface HistoryPublicListResponse extends Omit<History, 'userId'> {}
 
 export const HISTORY_API_ENDPOINTS = {
-  //히스토리 저장
+  // 히스토리 저장
   save: defineEndpoint<HistorySaveRequest, void>({
-    url: '/api/v1' + apiBase,
+    url: `/api/v1${  apiBase}`,
     method: 'POST',
   }),
 
-  //히스토리 수정
+  // 히스토리 수정
   update: defineEndpoint<HistoryUpdateRequest, void>({
-    url: '/api/v1' + apiBase,
+    url: `/api/v1${  apiBase}`,
     method: 'PUT',
   }),
 
-  //히스토리 삭제
+  // 히스토리 삭제
   delete: defineEndpoint<HistoryDeleteRequest, void>({
-    url: '/api/v1' + apiBase,
+    url: `/api/v1${  apiBase}`,
     method: 'DELETE',
   }),
 
-  //히스토리 리스트 정보가져오기
+  // 히스토리 리스트 정보가져오기
   get: defineEndpoint<HistoryListRequest, HistoryListResponse>({
-    url: '/api/v1' + apiBase + '/list',
+    url: `/api/v1${  apiBase  }/list`,
     method: 'GET',
   }),
 
-  //히스토리 상세 정보 가져오기
+  // 히스토리 상세 정보 가져오기
   getDetail: defineEndpoint<HistoryDetailRequest, HistoryDetailResponse>({
-    url: '/api/v1' + apiBase,
+    url: `/api/v1${  apiBase}`,
     method: 'GET',
   }),
 
-  //공개 히스토리 리스트 가져오기
+  // 공개 히스토리 리스트 가져오기
   getPublicList: defineEndpoint<HistoryPublicListRequest, HistoryPublicListResponse>({
-    url: '/api/v1' + publicApiBase + '/list',
+    url: `/api/v1${  publicApiBase  }/list`,
     method: 'GET',
   }),
 };

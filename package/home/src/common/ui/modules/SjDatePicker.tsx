@@ -11,11 +11,11 @@ interface SjDatePickerProps {
 }
 
 const SjDatePicker = ({ label, onDateChange, initialDate = null }: SjDatePickerProps) => {
+  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(initialDate);
+
   useEffect(() => {
     setSelectedDate(initialDate);
   }, [initialDate]);
-
-  const [selectedDate, setSelectedDate] = useState<Dayjs | null>(initialDate);
 
   const handleChange = (newValue: Dayjs | null) => {
     setSelectedDate(newValue);

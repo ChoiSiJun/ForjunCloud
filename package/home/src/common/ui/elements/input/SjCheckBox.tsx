@@ -30,7 +30,7 @@ const SjCheckbox = ({
         color={color}
       />
     );
-  } else {
+  } 
     return (
       <FormControlLabel
         defaultChecked={defaultChecked}
@@ -40,7 +40,7 @@ const SjCheckbox = ({
         label={label}
       />
     );
-  }
+  
 };
 
 export default SjCheckbox;

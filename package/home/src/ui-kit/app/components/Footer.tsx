@@ -6,7 +6,7 @@ interface CopyrightProps {
   href: string;
 }
 
-//하단 카피라이트 컴포넌트
+// 하단 카피라이트 컴포넌트
 function Copyright({ color, href }: CopyrightProps) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" pt={4}>
@@ -15,7 +15,7 @@ function Copyright({ color, href }: CopyrightProps) {
         MirTech.
       </Link>{' '}
       {new Date().getFullYear()}
-      {'.'}
+      .
     </Typography>
   );
 }

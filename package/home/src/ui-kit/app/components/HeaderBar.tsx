@@ -8,14 +8,14 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 
-//Mui AppBar Type
+// Mui AppBar Type
 interface AppBarProps extends MuiAppBarProps {
   headerBarHeight: number;
   sidebarWidth: number;
   open?: boolean;
 }
 
-//Mui AppBar 스타일 정의 컴포넌트
+// Mui AppBar 스타일 정의 컴포넌트
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== 'open' && prop !== 'sidebarWidth',
 })<AppBarProps>(({ theme, open, sidebarWidth, headerBarHeight }) => ({
@@ -35,7 +35,7 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-//Liberty HeaderBar Type
+// Liberty HeaderBar Type
 interface HeaderBarProps {
   setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
   isSidebarOpen: boolean;
@@ -44,14 +44,14 @@ interface HeaderBarProps {
   title: string;
 }
 
-//Liberty HeaderBar 컴포넌트
+// Liberty HeaderBar 컴포넌트
 const HeaderBar = ({ title, headerBarHeight, sidebarWidth, setSidebarOpen, isSidebarOpen }: HeaderBarProps) => {
   const currentTheme = useTheme(); // 현재 테마 객체 가져오기
   const lgUp = useMediaQuery(currentTheme.breakpoints.up('lg'));
   const navigate = useNavigate();
 
   const HandleMobileSideOpen = () => {
-    if (isSidebarOpen == false) {
+    if (isSidebarOpen === false) {
       setSidebarOpen(true);
     } else {
       setSidebarOpen(false);

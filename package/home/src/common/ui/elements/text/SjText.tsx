@@ -66,7 +66,7 @@ const SjText = ({
     return (
       <StyledTypography
         variant={variant}
-        component={'p'}
+        component="p"
         renderType={renderType} // 여기서 넘겨줌
         onClick={onClick}
         {...rest}
@@ -78,7 +78,7 @@ const SjText = ({
   return (
     <StyledTypography
       variant={variant}
-      component={'span'}
+      component="span"
       renderType={renderType} // 여기서 넘겨줌
       onClick={onClick}
       {...rest}

@@ -19,7 +19,7 @@ const CompanyForm = ({ personalHook }: CompanyFormProps) => {
 
   return (
     <Paper sx={{ p: 3 }}>
-      <SjText text={'회사정보'} renderType="title" />
+      <SjText text="회사정보" renderType="title" />
       {companies.map((entry, idx) => (
         <Grid
           container
@@ -63,8 +63,8 @@ const CompanyForm = ({ personalHook }: CompanyFormProps) => {
         </Grid>
       ))}
       <SjButton
-        ButtonType={'input'}
-        buttonName={'회사추가'}
+        ButtonType="input"
+        buttonName="회사추가"
         onClick={handleAddCompany}
       />
     </Paper>

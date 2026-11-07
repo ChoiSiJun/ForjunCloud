@@ -47,7 +47,6 @@ const useAuth = () => {
   const handleDuplicateIdCheck = async (params: DuplicateIdCheckUserRequest) => {
     if (!params.userId) {
       toast.error('아이디를 입력해주세요.');
-      return;
     }
 
     if (isDuplicateIdChecking) {
@@ -67,7 +66,7 @@ const useAuth = () => {
         }
         setIsIdAvailable(!data);
       }
-      return false;
+      return;
     } finally {
       setIsDuplicateIdChecking(false);
     }

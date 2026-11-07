@@ -1,17 +1,16 @@
 import { Link } from 'react-router-dom';
 import { Box, Typography, styled, useTheme, Popover, MenuItem, MenuList, alpha } from '@mui/material';
-import forjunlogo from '/asset/forjuncloud-logo.svg';
 
 import Button from '@mui/material/Button';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import AppsIcon from '@mui/icons-material/Apps';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import packageInfo from '@config/Menu/Package';
-import React from 'react';
 import { useAppDispatch, useAppSelector } from 'store/ReduxHooks';
 import { packageAccess } from 'store/slice/MenuSlice';
+import forjunlogo from "../../asset/forjuncloud-logo.svg";
 
-//**************************컴포넌트 스타일 재설정
+//* *************************컴포넌트 스타일 재설정
 // Link 스타일 컴포넌트 재정의
 const LinkStyled = styled(Link)(() => ({
   height: '90px',
@@ -99,34 +98,34 @@ const MaterialIconBox = styled(Box)(({ theme }) => ({
 }));
 
 const SideBarHeader = () => {
-  //**************************컴포넌트 구성에 필요한 값들 설정
+  //* *************************컴포넌트 구성에 필요한 값들 설정
 
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const packageIndex = useAppSelector(state => state.Menu.accessPackageIndex);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handlePackageItemClick = (index: number) => {
     setAnchorEl(null);
     dispatch(packageAccess(index));
   };
 
-  //패키지 선택박스 제어
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  // 패키지 선택박스 제어
   const moduleSelectBox = Boolean(anchorEl);
 
-  //*******************************컴포넌트 이벤트 정의
+  //* ******************************컴포넌트 이벤트 정의
 
-  //패키지 선택박스 열기 이벤트
+  // 패키지 선택박스 열기 이벤트
   const handlePackageSelectOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  //패키지 선택박스 닫힘 이벤트
+  // 패키지 선택박스 닫힘 이벤트
   const handlePackageSelectClose = () => {
     setAnchorEl(null);
   };
 
-  //************************컴포넌트 렌더링 */
+  //* ***********************컴포넌트 렌더링 */
   return (
     <Box
       sx={{
@@ -219,7 +218,7 @@ const SideBarHeader = () => {
         </ModuleChangeBox>
 
         <Popover
-          id={'packageSelectPopOver'}
+          id="packageSelectPopOver"
           open={moduleSelectBox}
           anchorEl={anchorEl}
           onClose={handlePackageSelectClose}

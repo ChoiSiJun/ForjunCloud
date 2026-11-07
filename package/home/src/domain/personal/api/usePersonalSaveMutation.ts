@@ -1,8 +1,8 @@
 import axios from '@config/axios/axios';
 import { useMutationWithLoading } from '@config/hooks/useMutationWithLoading';
 import { AxiosError } from 'axios';
-import { PERSONAL_API_ENDPOINTS } from './personalApi';
 import { GetRequestType, GetResponseType } from '@common/utill/type-utils';
+import { PERSONAL_API_ENDPOINTS } from './personalApi';
 
 const END_POINT = PERSONAL_API_ENDPOINTS.save;
 

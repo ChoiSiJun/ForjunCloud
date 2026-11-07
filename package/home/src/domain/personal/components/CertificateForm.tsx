@@ -14,7 +14,7 @@ const CertificateForm = ({ personalHook }: CertificateFormProps) => {
 
   return (
     <Paper sx={{ p: 3 }}>
-      <SjText text={'자격증정보'} renderType="title" />
+      <SjText text="자격증정보" renderType="title" />
       {certificates.map((entry, idx) => (
         <Grid container spacing={1} key={idx} alignItems="center" sx={{ mb: 1 }}>
           <Grid item xs={4}>
@@ -33,7 +33,7 @@ const CertificateForm = ({ personalHook }: CertificateFormProps) => {
           </Grid>
         </Grid>
       ))}
-      <SjButton ButtonType={'input'} buttonName={'자격증추가'} onClick={handleAddCertificate} />
+      <SjButton ButtonType="input" buttonName="자격증추가" onClick={handleAddCertificate} />
     </Paper>
   );
 };

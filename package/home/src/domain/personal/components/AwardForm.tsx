@@ -47,19 +47,19 @@ const AwardForm = ({ personalHook }: AwardFormProps) => {
 
   return (
     <Paper sx={{ p: 3 }}>
-      <SjText renderType="title" text={'수상내역'} />
+      <SjText renderType="title" text="수상내역" />
 
       <Grid container spacing={1} alignItems="center" sx={{ mb: 2 }}>
         <Grid item xs={10}>
           <SjTextField
-            label={'수상 내역 추가 (Enter 또는 버튼으로 등록)'}
+            label="수상 내역 추가 (Enter 또는 버튼으로 등록)"
             value={inputValue} // 💡 로컬 state와 연결
             onChange={handleChange} // 💡 변경 핸들러
             onKeyDown={handleKeyDown}
           />
         </Grid>
         <Grid item xs={2}>
-          <SjButton ButtonType={'input'} buttonName={'추가'} onClick={handleAddItem} />
+          <SjButton ButtonType="input" buttonName="추가" onClick={handleAddItem} />
         </Grid>
       </Grid>
 

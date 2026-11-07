@@ -1,7 +1,8 @@
 import { createTheme } from '@mui/material/styles';
-import '../../../../../home/public/font/NotoSansKR-Bold.woff2';
-import '../../../../../home/public/font/NotoSansKR-Medium.woff2';
-import '../../../../../home/public/font/NotoSansKR-Regular.woff2';
+import "../../../../public/font/NotoSansKR-Bold.woff2";
+import "../../../../public/font/NotoSansKR-Medium.woff2";
+import "../../../../public/font/NotoSansKR-Regular.woff2";
+
 export const appTheme = createTheme({
   direction: 'ltr',
   palette: {

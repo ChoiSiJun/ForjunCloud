@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 
 import ArticleIcon from '@mui/icons-material/Article';
 
-//타입지정
+// 타입지정
 interface NavItemProps {
   name: string;
   path: string;
@@ -20,7 +20,7 @@ interface NavItemProps {
   onClick?: () => void;
 }
 
-//스타일 컴포넌트 재구성
+// 스타일 컴포넌트 재구성
 const NavItemStyled = styled(ListItemButton)(({ theme }) => ({
   whiteSpace: 'nowrap',
   marginBottom: '4px',
@@ -72,7 +72,7 @@ const NavItemStyled = styled(ListItemButton)(({ theme }) => ({
 }));
 
 const NavItem = ({ name, path, code, accessPath, onClick }: NavItemProps) => {
-  //컴포넌트 렌더링
+  // 컴포넌트 렌더링
   return (
     <ListItem component="li" disablePadding key={code}>
       <Link
@@ -95,7 +95,7 @@ const NavItem = ({ name, path, code, accessPath, onClick }: NavItemProps) => {
             <ArticleIcon sx={{ fontSize: '20px' }} />
           </ListItemIcon>
           <ListItemText sx={{ width: '100%' }}>
-            <>{name}</>
+            {name}
           </ListItemText>
         </NavItemStyled>
       </Link>

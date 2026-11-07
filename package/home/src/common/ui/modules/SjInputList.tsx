@@ -59,8 +59,8 @@ const SjInputList = ({
             <InputAdornment position="end">
               <IconButton edge="end" onClick={addvalue} size="small">
                 <SjButton
-                  ButtonType={'input'}
-                  buttonName={'추가'}
+                  ButtonType="input"
+                  buttonName="추가"
                   onClick={addvalue}
                 />
               </IconButton>
@@ -83,8 +83,8 @@ const SjInputList = ({
           <ListItem key={idx} divider>
             <ListItemText primary={n} />
             <SjButton
-              ButtonType={'input'}
-              buttonName={'삭제'}
+              ButtonType="input"
+              buttonName="삭제"
               onClick={() => removevalue(idx)}
             />
           </ListItem>

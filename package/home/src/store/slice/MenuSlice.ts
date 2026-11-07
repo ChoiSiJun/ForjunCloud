@@ -7,21 +7,21 @@ export interface MenuProps {
   menuPath: string;
 }
 
-export interface moduleProps {
+export interface ModuleProps {
   moduleCode: string;
   moduleName: string;
   modulePath: string;
   menuList?: MenuProps[];
 }
 
-export interface packageProps {
+export interface PackageProps {
   packageCode: string;
   packageName: string;
-  moduleList?: moduleProps[];
+  moduleList?: ModuleProps[];
 }
 
 export interface PackageInfoProps {
-  packageList: packageProps[];
+  packageList: PackageProps[];
   accessPackageIndex: number;
   accessPackageCode: string;
   accessPackageName: string;
@@ -54,7 +54,7 @@ export const MenuInfoSlice = createSlice({
         packageItem.moduleList?.forEach(moduleItem => {
           moduleItem.menuList?.forEach(menuItem => {
             if (location.pathname === menuItem.menuPath) {
-              //패키지 , 모듈 , 메뉴 정보 세팅
+              // 패키지 , 모듈 , 메뉴 정보 세팅
               state.accessPackageCode = packageItem.packageCode;
               state.accessPackageName = packageItem.packageName;
               state.accessModuleCode = moduleItem.moduleCode;

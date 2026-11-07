@@ -7,6 +7,7 @@ import sessionStorage from 'redux-persist/lib/storage/session';
 import ModalSlice from 'store/slice/ModalSlice';
 import LoadingSlice from 'store/slice/LoadingSlice';
 import ConfirmDialogSlice from 'store/slice/ConfirmDialogSlice';
+
 const reducers = combineReducers({
   Menu: MenuSlice,
   Auth: AuthSlice,

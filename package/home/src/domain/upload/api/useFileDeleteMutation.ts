@@ -9,7 +9,7 @@ const END_POINT = FILE_UPLOAD_API_ENDPOINTS.delete;
 type DeleteReq = GetRequestType<typeof END_POINT>;
 type DeleteRes = GetResponseType<typeof END_POINT>;
 
-//파일 삭제 Mutation
+// 파일 삭제 Mutation
 const useFileDeleteMutation = () => {
   return useMutationWithLoading<DeleteRes, AxiosError, DeleteReq>({
     mutationFn: async fileId => {
@@ -19,7 +19,7 @@ const useFileDeleteMutation = () => {
 
       await axios<DeleteRes>({
         method: END_POINT.method,
-        url: END_POINT.url + `/${fileId}`,
+        url: `${END_POINT.url  }/${fileId}`,
       });
     },
   });

@@ -38,7 +38,7 @@ const Personal = () => {
         <AwardForm personalHook={personalHook} />
 
         {/* 제출 버튼 */}
-        <SjButton ButtonType={'submit'} buttonName={'등록 수정'} />
+        <SjButton ButtonType="submit" buttonName="등록 수정" />
       </Box>
     </form>
   );

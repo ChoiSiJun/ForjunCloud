@@ -50,8 +50,10 @@ const SjBadge = ({
   const mergedSx = React.useMemo(() => {
     if (!badgeSx) return sx;
 
+    const baseSx = Array.isArray(sx) ? sx : [sx].filter(Boolean);
+
     return [
-      ...(Array.isArray(sx) ? sx : sx ? [sx] : []),
+      ...baseSx,
       {
         '& .MuiBadge-badge': badgeSx,
       },

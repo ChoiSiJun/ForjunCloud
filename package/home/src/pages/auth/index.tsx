@@ -11,7 +11,6 @@ import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -27,7 +26,7 @@ import { authDelete } from '@store/slice/AuthSlice';
 import Join from '@domain/user/components/Join';
 import useAuth from '@domain/user/hooks/useAuth';
 
-//Types
+// Types
 import { LoginUserRequest } from '@domain/user/api/userApi';
 
 // 기본 테마 설정
@@ -161,16 +160,16 @@ export default function Auth() {
               </Button>
               <Grid container justifyContent="center">
                 <Grid item>
-                  <Link href="#" onClick={handleJoin} variant="body2">
-                    {'Sign Up'}
-                  </Link>
+                  <Button type="button" onClick={handleJoin} variant="text" size="small">
+                    Sign Up
+                  </Button>
                 </Grid>
               </Grid>
             </Box>
           </Box>
         </Grid>
 
-        <Join joinOpen={joinOpen} handleJoin={handleJoin}></Join>
+        <Join joinOpen={joinOpen} handleJoin={handleJoin} />
       </Grid>
     </ThemeProvider>
   );
