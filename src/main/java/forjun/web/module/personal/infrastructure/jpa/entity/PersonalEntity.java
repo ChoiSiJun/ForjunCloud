@@ -38,8 +38,9 @@ public class PersonalEntity {
     /** 자기소개 */
     private String introduction;
 
-    /** 프로필 이미지 URL */
-    private String profileImageUrl;
+    /** 업로드 파일 식별자 */
+    @Column(name = "profile_image_id")
+    private String profileImageId;
 
     // 경력
     @Builder.Default
@@ -79,8 +80,8 @@ public class PersonalEntity {
         this.gradePointAverage = personal.getGradePointAverage();
         this.introduction = personal.getIntroduction();
 
-        if(personal.getProfile_image_url() != null){
-         this.profileImageUrl = personal.getProfile_image_url();
+        if(personal.getProfile_image_id() != null){
+         this.profileImageId = personal.getProfile_image_id();
         }
 
         this.companies.clear();

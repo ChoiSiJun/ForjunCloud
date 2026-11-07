@@ -18,6 +18,7 @@ public record PersonalDetailResponse(
     String introduction,
     //프로필 이미지
     String profileImageUrl,
+    String profileImageId,
     //수상  
     List<PersonalAwardResponse> awards,
     //경력

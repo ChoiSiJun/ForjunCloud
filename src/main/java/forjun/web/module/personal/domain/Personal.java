@@ -21,7 +21,7 @@ public class Personal {
     private String education;
     private String gradePointAverage;
     private String introduction;
-    private String profile_image_url;
+    private String profile_image_id;
 
     @Builder.Default
     List<PersonalAward> personalAwards = new ArrayList<>();

@@ -5,6 +5,7 @@ import forjun.web.exception.ErrorCode;
 import forjun.web.module.system.application.port.in.UploadUsecase;
 import forjun.web.module.system.application.port.out.FilePersistencePort;
 import forjun.web.module.system.application.port.out.FileStoragePort;
+import forjun.web.module.system.application.port.out.InvalidUploadPathException;
 import forjun.web.module.system.domain.UploadFile;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -45,6 +46,8 @@ public class FileUploadService implements UploadUsecase {
 
             return uploadFile;
 
+        } catch (InvalidUploadPathException e) {
+            throw new AppException(ErrorCode.INVALID_UPLOAD_PATH);
         }catch (Exception dbException) {
 
             // DB 저장이 실패하면, 물리적으로 저장된 파일도 삭제 (보상 트랜젝션)

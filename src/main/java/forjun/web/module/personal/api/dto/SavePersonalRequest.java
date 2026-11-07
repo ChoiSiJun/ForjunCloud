@@ -18,7 +18,7 @@ public record SavePersonalRequest(
     //자기소개서 자기소개
     String introduction,
     //자기소개서 프로필 이미지
-    String profile_image_url,
+    String profile_image_id,
     //자기소개서 수상
     List<PersonalAwardRequest> awards,
     //자기소개서 경력

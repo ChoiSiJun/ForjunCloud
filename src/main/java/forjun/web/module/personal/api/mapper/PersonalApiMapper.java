@@ -4,7 +4,7 @@ import forjun.web.module.personal.api.dto.PersonalDetailResponse;
 import forjun.web.module.personal.api.dto.SavePersonalRequest;
 import forjun.web.module.personal.application.port.in.dto.SavePersonalCommand;
 import forjun.web.module.personal.domain.Personal;
-import org.springframework.beans.factory.annotation.Value;
+import forjun.web.module.personal.application.port.in.dto.PersonalView;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,11 +15,6 @@ import java.util.List;
 @Component
 public class PersonalApiMapper {
 
-    @Value("${file.upload.resource-domain}")
-    private String resourceDomain;
- 
-    @Value("${file.upload.resource-url}")
-    private String resourceUrl;
 
     /** 자기소개서 도메인 변환 */
     public SavePersonalCommand toSavePersonalCommand(String userId, SavePersonalRequest request) {
@@ -41,17 +36,18 @@ public class PersonalApiMapper {
         // Certificates
         request.certificates().forEach(c -> certificates.add(new SavePersonalCommand.PersonalCertificate(c.certificateName(), c.certificateAcquisitionOrganization(), c.certificateAcquisitionDate())));
 
-        return new SavePersonalCommand(userId, request.job(), request.name(), request.education(), request.gradePointAverage(), request.introduction(), request.profile_image_url(), awards, skills, companies, certificates);
+        return new SavePersonalCommand(userId, request.job(), request.name(), request.education(), request.gradePointAverage(), request.introduction(), request.profile_image_id(), awards, skills, companies, certificates);
     }
 
 
     /** 자기소개서 상세 응답 DTO 변환 */
-    public PersonalDetailResponse toPersonalResponseDto(Personal personal) {
+    public PersonalDetailResponse toPersonalResponseDto(PersonalView view) {
 
         // 자기소개서가 없으면 null 반환
-        if(personal == null){
+        if(view == null){
             return null;
         }
+        Personal personal = view.personal();
 
         // 수상 리스트
         List<PersonalDetailResponse.PersonalAwardResponse> awardList = new ArrayList<>();
@@ -103,7 +99,8 @@ public class PersonalApiMapper {
             personal.getEducation(),
             personal.getGradePointAverage(),
             personal.getIntroduction(),
-            resourceDomain + resourceUrl + personal.getProfile_image_url(),
+            view.profileImageUrl(),
+            personal.getProfile_image_id(),
             awardList,
             companyList,
             skillList,

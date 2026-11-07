@@ -8,7 +8,9 @@ import forjun.web.module.personal.application.port.in.dto.GetPersonalQuery;
 import forjun.web.module.personal.application.port.in.dto.GetPublicPersonalQuery;
 import forjun.web.module.personal.application.port.in.dto.SavePersonalCommand;
 import forjun.web.module.personal.domain.Personal;
-import forjun.web.module.personal.infrastructure.jpa.PersonalJpaAdapater;
+import forjun.web.module.personal.application.port.out.PersonalJpaPort;
+import forjun.web.module.personal.application.port.out.PersonalImagePort;
+import forjun.web.module.personal.application.port.in.dto.PersonalView;
 import forjun.web.module.user.application.port.in.UserQuery;
 import forjun.web.module.user.application.port.in.dto.GetUserInfoByUserIdQuery;
 import forjun.web.module.user.domain.PrivateStatus;
@@ -24,7 +26,8 @@ import org.springframework.stereotype.Service;
 public class PersonalService implements PersonalUseCase , PersonalQuery {
 
     //personal Jpa 어댑터
-    private final PersonalJpaAdapater personalJpaAdapater;
+    private final PersonalJpaPort personalJpaAdapater;
+    private final PersonalImagePort personalImagePort;
 
     /** 유저 Query */
     private final UserQuery userQuery;
@@ -33,18 +36,24 @@ public class PersonalService implements PersonalUseCase , PersonalQuery {
     @Override
     public void savePersonal(SavePersonalCommand command) {
 
+        if (command.profile_image_id() != null
+                && (command.profile_image_id().isBlank()
+                || personalImagePort.findImage(command.profile_image_id()).isEmpty())) {
+            throw AppException.of(ErrorCode.FILE_NOT_FOUND);
+        }
+
         // 자기소개서 도메인 생성
         personalJpaAdapater.savePersonal(PersonalFactory.createPersonal(command));
         
     }
 
     @Override
-    public Personal getPersonal(GetPersonalQuery query) {
-        return personalJpaAdapater.getPersonal(query.userId()).orElse(null);
+    public PersonalView getPersonal(GetPersonalQuery query) {
+        return personalJpaAdapater.getPersonal(query.userId()).map(this::toView).orElse(null);
     }
 
     @Override
-    public Personal getPublicPersonal(GetPublicPersonalQuery query) {
+    public PersonalView getPublicPersonal(GetPublicPersonalQuery query) {
 
         //퍼블릭 자기소개서 유저 접근정보 체크
         String userId = query.userId();
@@ -64,8 +73,14 @@ public class PersonalService implements PersonalUseCase , PersonalQuery {
         }
 
         // 자기소개서 조회
-        return personalJpaAdapater.getPersonal(query.userId()).orElseThrow(
+        return personalJpaAdapater.getPersonal(query.userId()).map(this::toView).orElseThrow(
             () -> AppException.of(ErrorCode.PERSONAL_NOT_FOUND, userId)
         );
+    }
+    private PersonalView toView(Personal personal) {
+        String fileId = personal.getProfile_image_id();
+        String url = fileId == null || fileId.isBlank() ? null
+                : personalImagePort.findImage(fileId).map(PersonalImagePort.ImageInfo::url).orElse(null);
+        return new PersonalView(personal, url);
     }
 }

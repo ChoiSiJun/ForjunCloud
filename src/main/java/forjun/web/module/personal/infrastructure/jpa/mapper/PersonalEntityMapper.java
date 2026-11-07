@@ -28,7 +28,7 @@ public class PersonalEntityMapper {
                 .education(personal.getEducation())
                 .gradePointAverage(personal.getGradePointAverage())
                 .introduction(personal.getIntroduction())
-                .profileImageUrl(personal.getProfile_image_url())
+                .profileImageId(personal.getProfile_image_id())
                 .build();
 
         // Award 매핑
@@ -134,7 +134,7 @@ public class PersonalEntityMapper {
                 .education(personalEntity.getEducation())
                 .gradePointAverage(personalEntity.getGradePointAverage())
                 .introduction(personalEntity.getIntroduction())
-                .profile_image_url(personalEntity.getProfileImageUrl())
+                .profile_image_id(personalEntity.getProfileImageId())
                 .personalAwards(personalAwards)
                 .personalSkills(personalSkills)
                 .personalCompanys(personalCompanys)

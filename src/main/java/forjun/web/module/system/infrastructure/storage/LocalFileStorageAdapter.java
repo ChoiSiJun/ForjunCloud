@@ -1,6 +1,7 @@
 package forjun.web.module.system.infrastructure.storage;
 
 import forjun.web.module.system.application.port.out.FileStoragePort;
+import forjun.web.module.system.application.port.out.InvalidUploadPathException;
 import forjun.web.module.system.domain.UploadFile;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -10,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.LinkOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,9 +39,9 @@ public class LocalFileStorageAdapter implements FileStoragePort {
             if (!Files.exists(uploadPath)) {
                 try {
                     Files.createDirectories(uploadPath); // 디렉토리 구조가 여러 단계여도 안전하게 생성
-                    log.info("로컬 업로드 디렉토리 생성 완료: {}", resourcePath);
+                    log.info("업로드 디렉토리 생성 완료: {}", resourcePath);
                 } catch (IOException e) {
-                    log.error("로컬 업로드 디렉토리 생성 실패", e);
+                    log.error("업로드 디렉토리 생성 실패", e);
                     // 초기화 실패는 애플리케이션 시작을 막아야 함
                     throw new RuntimeException("파일 저장소 초기화 실패: 디렉토리를 생성할 수 없습니다.", e);
                 }
@@ -55,26 +58,54 @@ public class LocalFileStorageAdapter implements FileStoragePort {
         String originalFilename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         String fileId = UUID.randomUUID().toString();
         String fileExtension = getFileExtension(originalFilename);
+
+        // 1. 파일 확장자 검사
+        if (!fileExtension.matches("[A-Za-z0-9]*")) {
+            throw new InvalidUploadPathException();
+        }
         String storedFileName = fileId + "." + fileExtension;
 
-        if(StringUtils.hasText(directory)) {
-            directory = directory + "/";
-        }else{
-            directory = "";
+        // 상대 디렉터리 이름만 허용한다. 양쪽 OS의 구분자와 드라이브 경로도 검사한다.
+        directory = directory == null ? "" : directory;
+        if (!directory.isEmpty() && !directory.matches("[\\p{L}\\p{N}_-]+(/[\\p{L}\\p{N}_-]+)*")) {
+            throw new InvalidUploadPathException();
         }
-        storedFileName = directory + storedFileName;
-        Path targetLocation = Paths.get(resourcePath).resolve(storedFileName);
+
+        // 💡 2. 경로 검증 및 파일 저장 로직 개선
+        Path root = Paths.get(resourcePath).toAbsolutePath().normalize();
+        Path targetDirectory = root.resolve(directory).normalize();
+        Path targetLocation = targetDirectory.resolve(storedFileName).normalize();
+        if (!targetLocation.startsWith(root)) {
+            throw new InvalidUploadPathException();
+        }
+        String urlPath = root.relativize(targetLocation).toString().replace('\\', '/');
         LocalDateTime uploadDate = LocalDateTime.now();
 
         try {
-            Files.createDirectories(targetLocation.getParent());
-            Files.copy(file.getInputStream(), targetLocation);
+            // 기존 심볼릭 링크나 정션을 통해 루트 밖으로 나가는 것도 막는다.
+            Path realRoot = root.toRealPath();
+            Path current = root;
+            if (!directory.isEmpty()) {
+                for (String segment : directory.split("/")) {
+                    current = current.resolve(segment);
+                    if (Files.exists(current, LinkOption.NOFOLLOW_LINKS)) {
+                        if (Files.isSymbolicLink(current) || !current.toRealPath().startsWith(realRoot)) {
+                            throw new InvalidUploadPathException();
+                        }
+                    } else {
+                        Files.createDirectory(current);
+                    }
+                }
+            }
+            try (InputStream input = file.getInputStream()) {
+                Files.copy(input, targetLocation);
+            }
 
             return UploadFile.builder()
                     .fileId(fileId)
                     .originalName(originalFilename)
                     .storedPath(targetLocation.toString())
-                    .url(storedFileName)
+                    .url(urlPath)
                     .size(file.getSize())
                     .contentType(file.getContentType())
                     .uploadAt(uploadDate)

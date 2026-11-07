@@ -28,7 +28,7 @@ public class PersonalFactory {
             .education(command.education())
             .gradePointAverage(command.gradePointAverage())
             .introduction(command.introduction())
-            .profile_image_url(command.profile_image_url())
+            .profile_image_id(command.profile_image_id())
             .personalAwards(command.awards().stream()
                 .map(data -> PersonalAward.builder().awardName(data.awardName()).build())
                 .collect(Collectors.toList()))

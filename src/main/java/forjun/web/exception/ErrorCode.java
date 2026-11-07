@@ -104,6 +104,13 @@ public enum ErrorCode {
     ),
 
     // Upload
+    INVALID_UPLOAD_PATH(
+            "허용되지 않은 업로드 경로입니다.",
+            "허용되지 않은 업로드 경로 요청",
+            "INVALID_UPLOAD_PATH",
+            HttpStatus.BAD_REQUEST
+    ),
+
     FILE_NOT_FOUND(
             "파일이 없습니다.",
             "파일 미존재",

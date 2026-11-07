@@ -17,8 +17,8 @@ public record SavePersonalCommand(
     String gradePointAverage,
     /** 자기소개 */
     String introduction,
-    /** 프로필 이미지 URL */
-    String profile_image_url, 
+    /** 업로드 응답의 fileId */
+    String profile_image_id,
     /** 수상 명령 */
     List<PersonalAward> awards, 
     /** 스킬 명령 */
