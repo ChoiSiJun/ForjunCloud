@@ -11,6 +11,7 @@ type UploadRes = GetResponseType<typeof END_POINT>;
 
 const usePersonaSaveMutation = () => {
   return useMutationWithLoading<UploadRes, AxiosError, UploadReq>({
+    retry: false,
     mutationFn: async params => {
       await axios({
         method: END_POINT.method,

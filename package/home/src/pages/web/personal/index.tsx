@@ -117,7 +117,7 @@ const OpenPersonal = () => {
               }}
             >
               <Avatar
-                src={personalData.profileImageUrl || 'https://via.placeholder.com/150'}
+                src={personalData.profileImageUrl || undefined}
                 sx={{
                   width: 120,
                   height: 120,

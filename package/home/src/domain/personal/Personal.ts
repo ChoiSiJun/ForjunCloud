@@ -2,6 +2,7 @@ export interface Personal {
   userId?: string;
   name: string;
   job: string;
+  profileImageId: string | null;
   profileImageUrl: string | null;
   education?: string;
   gradePointAverage?: string;

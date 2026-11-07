@@ -29,7 +29,7 @@ const BasicForm = ({ personalHook }: BasicFormProps) => {
       <Grid container spacing={2} alignItems="center">
         <Grid item xs={12} display="flex" flexDirection="column" alignItems="center">
           <Avatar
-            src={previewImage || 'https://via.placeholder.com/150'}
+            src={previewImage || undefined}
             sx={{
               width: 120,
               height: 120,
@@ -39,9 +39,9 @@ const BasicForm = ({ personalHook }: BasicFormProps) => {
             }}
             onClick={handleImageClick}
           />
-          <Button variant="contained" component="label">
+          <Button variant="contained" component="label" disabled={personalHook.isSaving}>
             이미지 선택
-            <input type="file" hidden accept="image/*" onChange={handleFileChange} />
+            <input type="file" disabled={personalHook.isSaving} hidden accept="image/*" onChange={handleFileChange} />
           </Button>
         </Grid>
         <Grid item xs={12} sm={6}>

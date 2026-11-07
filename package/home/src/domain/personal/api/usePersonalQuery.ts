@@ -8,7 +8,7 @@ const END_POINT = PERSONAL_API_ENDPOINTS.get;
 
 type PersonalResponse = GetResponseType<typeof END_POINT>;
 
-const fetchPersonal = async (): Promise<PersonalResponse> => {
+export const fetchPersonal = async (): Promise<PersonalResponse> => {
   const response = await axios({
     method: END_POINT.method,
     url: END_POINT.url,

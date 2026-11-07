@@ -4,7 +4,18 @@ import { Personal } from '@domain/personal/Personal';
 const apiBase = '/personal';
 const publicApiBase = '/public-personal';
 
-export interface PersonalSaveRequest extends Personal {}
+export interface PersonalSaveRequest {
+  name: string;
+  job: string;
+  profile_image_id: string | null;
+  education?: string;
+  grade_point_average?: string;
+  introduction?: string;
+  awards: { award_name: string }[];
+  companies: { company_name: string; start_date: string; end_date: string }[];
+  skills: { skill_category: string; skill_name: string }[];
+  certificates: { certificate_name: string; certificate_acquisition_organization: string; certificate_acquisition_date: string }[];
+}
 export interface PersonalDetailResponse extends Personal {}
 export interface PersonalPublicDetailRequest extends Pick<Personal, 'userId'> {}
 export interface PersonalPublicDetailResponse extends Omit<Personal, 'id' | 'userId'> {}
