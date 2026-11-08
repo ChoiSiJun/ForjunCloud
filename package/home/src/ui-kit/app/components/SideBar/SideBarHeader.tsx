@@ -8,8 +8,7 @@ import React, { useState } from 'react';
 import packageInfo from '@config/Menu/Package';
 import { useAppDispatch, useAppSelector } from 'store/ReduxHooks';
 import { packageAccess } from 'store/slice/MenuSlice';
-// 로고 파일을 추가하면 이 URL을 변경하세요.
-const logoUrl: string = '';
+import logo from '@asset/image/header_logo.png';
 
 //* *************************컴포넌트 스타일 재설정
 // Link 스타일 컴포넌트 재정의
@@ -147,7 +146,7 @@ const SideBarHeader = () => {
           justifyContent: 'center',
         }}
       >
-        {logoUrl && <img src={logoUrl} alt="Logo" style={{ width: '100%', height: 'auto', maxWidth: '180px' }} />}
+        {logo && <img src={logo} alt="Logo" style={{ width: '100%', height: 'auto', maxWidth: '180px' }} />}
       </LinkStyled>
 
       {/* 패키지 선택 영역 */}
@@ -171,11 +170,11 @@ const SideBarHeader = () => {
             <MaterialIconBox className="package-icon-box">
               <AppsIcon className="package-icon" sx={{ fontSize: '20px' }} />
             </MaterialIconBox>
-            <Box 
-              sx={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                alignItems: 'flex-start', 
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
                 flex: 1,
                 minWidth: 0,
                 overflow: 'hidden',
@@ -269,11 +268,7 @@ const SideBarHeader = () => {
             }}
           >
             {packageInfo.map((item, index) => (
-              <MenuItem
-                key={item.packageCode}
-                selected={index === packageIndex}
-                onClick={() => handlePackageItemClick(index)}
-              >
+              <MenuItem key={item.packageCode} selected={index === packageIndex} onClick={() => handlePackageItemClick(index)}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                   <Box
                     sx={{
