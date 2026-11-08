@@ -4,8 +4,8 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5432/forjun
-    username: forjun
-    password: forjun
+    username: sijun
+    password: sijun
     driver-class-name: org.postgresql.Driver
 
   jpa:
