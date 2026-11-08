@@ -1,0 +1,28 @@
+패키지 구조 정의서
+
+api
+-> api RestController 정의 패키지.
+-> Rest API 입구점에 대한것만 정의한다.
+
+1. api 요청 및 응답에 대한 dto만 사용.
+2. 비즈니스 로직이 들어가지 않는다.
+3. dto에 대한 유효성 검사만 진행한다.
+4. 요청 DTO 유효성에 대한 Exception만 진행한다.
+5. API Mapper에서 요청 DTO를 application의 Command/Query로 변환해서 in Port에 넘긴다.
+
+application
+-> 도메인 및 Port의 순서 및 비즈니스를 제어하기위한 패키지
+1. 도메인에 대한 상태 호출 , 비즈니스 로직 호출 및 Port에 대한것만 정의한다.
+2. application 자체의 Command/Query/View 및 도메인 모델을 사용한다. API DTO나 JPA 엔티티를 계약으로 사용하지 않는다.
+3. 비즈니스 로직에 대한 에러 및 유효성 Exception을 진행한다.
+
+domain
+-> 순수 도메인만 정의하는 패키지
+1. exception은 application에 위임한다.
+2. 자기 자신 도메인에 대한 순수상태만 구현한다.
+
+infrastructure
+-> 외부 시스템에 대한 정의 패키지
+1. DB나 외부통신에 대한 기능을 정의한다.
+2. exception은 연결에 대한 에러나 외부 시스템에 대한 에러만 처리한다.
+

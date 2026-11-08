@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    /* Bundler mode */
+    "allowImportingTsExtensions": true,
+
+    /* Linting */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
+  },
+  "extends": ["../../tsconfig.base.json", "./tsconfig.paths.json"],
+  "include": ["src/**/*.tsx", "src/**/*.ts", "*.js", "vite.config.ts"]
+}

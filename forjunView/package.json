@@ -1,0 +1,44 @@
+{
+  "name": "liberty5",
+  "packageManager": "yarn@4.1.1",
+  "private": true,
+  "workspaces": [
+    "package/*",
+    "storybook"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.11.27",
+    "@types/react": "^18.2.64",
+    "@types/react-dom": "^18.2.21",
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.0.1",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.34.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "eslint-plugin-storybook": "^0.8.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.1.6",
+    "vite-tsconfig-paths": "^4.3.2"
+  },
+  "scripts": {
+    "core": "yarn workspace @package/core",
+    "home": "yarn workspace @package/home",
+    "lint": "yarn workspaces foreach -A run lint",
+    "dev": "yarn home dev",
+    "build": "yarn home build",
+    "typecheck": "yarn workspaces foreach -A run typecheck",
+    "storybook": "yarn workspace storybook storybook",
+    "build-storybook": "yarn workspace storybook build-storybook"
+  }
+}

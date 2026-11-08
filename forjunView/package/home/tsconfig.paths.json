@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      //설정파일
+      "@config/*": ["config/*"],
+
+      //라우터
+      "@router": ["Router.tsx"],
+
+      //공통
+      "@common/*": ["common/*"],
+
+      //domain
+      "@domain/*": ["domain/*"],
+
+      //페이지
+      "@pages/*": ["pages/*"],
+
+      //UI-kit
+      "@ui-kit/*": ["ui-kit/*"],
+
+      //store
+      "@store/*": ["store/*"],
+
+      //자원파일
+      "@asset/*": ["asset/*"]
+    }
+  }
+}

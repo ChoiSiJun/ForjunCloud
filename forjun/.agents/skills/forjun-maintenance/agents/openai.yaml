@@ -1,0 +1,6 @@
+interface:
+  display_name: "유지보수·기능개선"
+  short_description: "백엔드 변경 영향을 분석하고 관련 테스트와 필요한 화면 E2E를 수행합니다"
+  default_prompt: "$forjun-maintenance를 사용해 요청한 변경을 구현하고 영향 범위에 맞는 테스트를 수행해줘."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,22 @@
+# Copy to application.yml and supply secrets through the process environment.
+spring:
+  application:
+    name: forjun
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+server:
+  port: ${SERVER_PORT:8085}
+jwt:
+  secretKey: ${JWT_SECRET_KEY}
+file:
+  upload:
+    resource-path: ${UPLOAD_PATH:./uploads/}
+    resource-domain: ${UPLOAD_DOMAIN:http://localhost:8085}
+    resource-url: /api/files/download/

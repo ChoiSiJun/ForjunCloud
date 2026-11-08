@@ -1,0 +1,87 @@
+# Java / Gradle generated output
+**/.gradle/
+**/build/
+**/bin/
+**/out/
+*.class
+*.hprof
+hs_err_pid*
+!**/src/main/**/build/
+!**/src/test/**/build/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+!**/src/main/**/out/
+!**/src/test/**/out/
+# Keep the Gradle Wrapper jar, scripts and properties in version control.
+!forjun/gradle/wrapper/gradle-wrapper.jar
+
+# Node / Vite / Storybook generated output
+**/node_modules/
+**/dist/
+**/dist-ssr/
+**/storybook-static/
+**/coverage/
+**/playwright-report/
+**/test-results/
+*.tsbuildinfo
+**/.pnp.*
+**/package-lock.json
+**/.yarn/*
+!**/.yarn/patches/
+!**/.yarn/plugins/
+!**/.yarn/releases/
+!**/.yarn/sdks/
+!**/.yarn/versions/
+
+# Runtime data and logs
+/forjun/uploads/
+**/logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Local configuration; commit sanitized examples instead.
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.local
+/forjun/src/main/resources/application.yml
+/forjun/src/main/resources/application-*.yml
+!/forjun/src/main/resources/application.example.yml
+!/forjun/src/main/resources/application-*.example.yml
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+
+# IDE / OS files
+**/.idea/
+*.iml
+*.iws
+*.ipr
+**/.vscode/*
+!**/.vscode/extensions.json
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+.classpath
+.project
+.settings/
+.apt_generated/
+.factorypath
+.springBeans
+.sts4-cache/
+**/nbproject/private/
+**/nbbuild/
+**/nbdist/
+**/.nb-gradle/
+
+# Project harness is source: keep AGENTS.md, .codex/ and .agents/skills/.
