@@ -13,3 +13,7 @@
 .pnp.*
 node_modules
 dist
+# Yarn is the only package manager
+package-lock.json
+*.tsbuildinfo
+storybook-static/

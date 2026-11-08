@@ -1,3 +1,7 @@
+# forjunView
+
+프로젝트 구조, 설치, 실행 명령, 환경 설정 및 검증 결과는 [PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)를 참고하세요.
+
 # view-react
 
 

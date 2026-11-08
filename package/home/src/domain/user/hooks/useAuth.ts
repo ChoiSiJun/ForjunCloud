@@ -66,7 +66,6 @@ const useAuth = () => {
         }
         setIsIdAvailable(!data);
       }
-      return;
     } finally {
       setIsDuplicateIdChecking(false);
     }

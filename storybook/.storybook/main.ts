@@ -1,26 +1,42 @@
+import { fileURLToPath } from 'node:url';
 import type { StorybookConfig } from '@storybook/react-vite';
+import { mergeConfig } from 'vite';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
-import { join, dirname } from 'path';
-
-/**
- * This function is used to resolve the absolute path of a package.
- * It is needed in projects that use Yarn PnP or are set up within a monorepo.
- */
-function getAbsolutePath(value: string): any {
-  return dirname(require.resolve(join(value, 'package.json')));
-}
 const config: StorybookConfig = {
-  stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: ['../../package/home/src/**/*.stories.@(js|jsx|ts|tsx)', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
-    getAbsolutePath('@storybook/addon-onboarding'),
-    getAbsolutePath('@storybook/addon-links'),
-    getAbsolutePath('@storybook/addon-essentials'),
-    getAbsolutePath('@chromatic-com/storybook'),
-    getAbsolutePath('@storybook/addon-interactions'),
+    '@storybook/addon-links',
+    '@storybook/addon-essentials',
+    '@storybook/addon-interactions',
+    '@storybook/addon-onboarding',
   ],
   framework: {
-    name: getAbsolutePath('@storybook/react-vite'),
+    name: '@storybook/react-vite',
     options: {},
   },
+  docs: {
+    autodocs: 'tag',
+  },
+  async viteFinal(config) {
+    return mergeConfig(config, {
+      plugins: [tsconfigPaths({
+        projects: [fileURLToPath(new URL('../../package/home/tsconfig.json', import.meta.url))],
+      })],
+      resolve: {
+        alias: {
+          '@common': fileURLToPath(new URL('../../package/home/src/common', import.meta.url)),
+          '@ui-kit': fileURLToPath(new URL('../../package/home/src/ui-kit', import.meta.url)),
+          '@config': fileURLToPath(new URL('../../package/home/src/config', import.meta.url)),
+          '@domain': fileURLToPath(new URL('../../package/home/src/domain', import.meta.url)),
+          '@pages': fileURLToPath(new URL('../../package/home/src/pages', import.meta.url)),
+          '@store': fileURLToPath(new URL('../../package/home/src/store', import.meta.url)),
+          '@asset': fileURLToPath(new URL('../../package/home/src/asset', import.meta.url)),
+          '@router': fileURLToPath(new URL('../../package/home/src/Router.tsx', import.meta.url)),
+        },
+      },
+    });
+  },
 };
+
 export default config;

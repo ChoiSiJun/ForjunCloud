@@ -6,12 +6,10 @@
     },
     {
       "path": "./tsconfig.node.json"
-    },
-
-    {
-      "path": ".././package/core"
     }
   ],
-
-  "extends": ["../tsconfig.base.json", "./tsconfig.paths.json"]
+  "extends": [
+    "../tsconfig.base.json",
+    "./tsconfig.paths.json"
+  ]
 }

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
 import { Button } from '@mui/material';
 import SjCard from './SjCard';
 
@@ -47,7 +48,7 @@ export const Clickable: Story = {
     title: '클릭 가능한 카드',
     subheader: '클릭해보세요',
     children: '이 카드는 클릭할 수 있습니다.',
-    onClick: () => alert('카드가 클릭되었습니다!'),
+    onClick: action('카드 클릭'),
   },
 };
 
@@ -63,9 +64,9 @@ export const CustomSize: Story = {
 export const WithElevation: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: '20px' }}>
-      <SjCard title="낮은 그림자" children="elevation: 1" elevation={1} />
-      <SjCard title="중간 그림자" children="elevation: 4" elevation={4} />
-      <SjCard title="높은 그림자" children="elevation: 8" elevation={8} />
+      <SjCard title="낮은 그림자" elevation={1}>elevation: 1</SjCard>
+      <SjCard title="중간 그림자" elevation={4}>elevation: 4</SjCard>
+      <SjCard title="높은 그림자" elevation={8}>elevation: 8</SjCard>
     </div>
   ),
 };

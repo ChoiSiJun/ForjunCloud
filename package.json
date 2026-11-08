@@ -1,19 +1,18 @@
 {
   "name": "liberty5",
-  "packageManager": "yarn@4.1.0",
+  "packageManager": "yarn@4.1.1",
   "private": true,
-  "workspaces": {
-    "packages": [
-      "package/*",
-      "storybook"
-    ]
-  },
+  "workspaces": [
+    "package/*",
+    "storybook"
+  ],
   "devDependencies": {
-    "@types/dompurify": "^3.2.0",
-    "@types/lodash": "^4.17.23",
     "@types/node": "^20.11.27",
+    "@types/react": "^18.2.64",
+    "@types/react-dom": "^18.2.21",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
+    "@vitejs/plugin-react": "^4.2.1",
     "eslint": "^8.0.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
@@ -26,42 +25,20 @@
     "eslint-plugin-react": "^7.34.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "eslint-plugin-storybook": "^0.8.0",
     "prettier": "^3.2.5",
-    "typescript": "*",
-    "typescript-eslint": "^7.2.0"
+    "typescript": "^5.2.2",
+    "vite": "^5.1.6",
+    "vite-tsconfig-paths": "^4.3.2"
   },
   "scripts": {
     "core": "yarn workspace @package/core",
     "home": "yarn workspace @package/home",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
-    "@hookform/resolvers": "^3.9.0",
-    "@mui/icons-material": "^5.15.14",
-    "@mui/material": "^5.15.14",
-    "@mui/styled-engine-sc": "6.0.0-alpha.18",
-    "@mui/x-charts": "^7.1.0",
-    "@mui/x-data-grid": "^7.1.1",
-    "@mui/x-date-pickers": "^8.9.0",
-    "@tabler/icons-react": "^3.2.0",
-    "@toast-ui/react-editor": "^3.2.3",
-    "axios": "^1.6.8",
-    "bootstrap": "^5.3.3",
-    "classnames": "^2.5.1",
-    "dayjs": "^1.11.13",
-    "dompurify": "^3.3.1",
-    "formik": "^2.4.6",
-    "immer": "^10.1.1",
-    "jwt-decode": "^4.0.0",
-    "react-bootstrap": "^2.10.1",
-    "react-hook-form": "^7.55.0",
-    "react-query": "^3.39.3",
-    "react-toastify": "^10.0.5",
-    "redux-persist": "^6.0.0",
-    "simplebar-react": "^3.2.4",
-    "use-immer": "^0.10.0",
-    "yup": "^1.4.0"
+    "lint": "yarn workspaces foreach -A run lint",
+    "dev": "yarn home dev",
+    "build": "yarn home build",
+    "typecheck": "yarn workspaces foreach -A run typecheck",
+    "storybook": "yarn workspace storybook storybook",
+    "build-storybook": "yarn workspace storybook build-storybook"
   }
 }

@@ -8,7 +8,8 @@ import React, { useState } from 'react';
 import packageInfo from '@config/Menu/Package';
 import { useAppDispatch, useAppSelector } from 'store/ReduxHooks';
 import { packageAccess } from 'store/slice/MenuSlice';
-import forjunlogo from "../../asset/forjuncloud-logo.svg";
+// 로고 파일을 추가하면 이 URL을 변경하세요.
+const logoUrl: string = '';
 
 //* *************************컴포넌트 스타일 재설정
 // Link 스타일 컴포넌트 재정의
@@ -139,13 +140,14 @@ const SideBarHeader = () => {
       {/* 로고 영역 */}
       <LinkStyled
         to="/liberty/dashboard"
+        aria-label="대시보드"
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
-        <img src={forjunlogo} alt="Logo" style={{ width: '100%', height: 'auto', maxWidth: '180px' }} />
+        {logoUrl && <img src={logoUrl} alt="Logo" style={{ width: '100%', height: 'auto', maxWidth: '180px' }} />}
       </LinkStyled>
 
       {/* 패키지 선택 영역 */}

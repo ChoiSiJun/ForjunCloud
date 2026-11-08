@@ -15,14 +15,5 @@
     "isolatedModules": true,
     "noEmit": true,
     "composite": true
-  },
-  "references": [
-    // 해당 패키지를 참조할수있음
-    {
-      "path": "./package/core"
-    },
-    {
-      "path": "./package/home"
-    }
-  ]
+  }
 }

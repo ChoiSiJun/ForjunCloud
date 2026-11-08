@@ -1093,7 +1093,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mui/system@npm:^5.16.14":
+"@mui/system@npm:5.16.14, @mui/system@npm:^5.16.14":
   version: 5.16.14
   resolution: "@mui/system@npm:5.16.14"
   dependencies:
@@ -1408,18 +1408,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@package/core@npm:0.0.0, @package/core@workspace:package/core":
+"@package/core@workspace:*, @package/core@workspace:package/core":
   version: 0.0.0-use.local
   resolution: "@package/core@workspace:package/core"
-  dependencies:
-    "@types/react": "npm:^18.2.64"
-    "@types/react-dom": "npm:^18.2.21"
-    "@vitejs/plugin-react": "npm:^4.2.1"
-    react: "npm:^18.2.0"
-    react-dom: "npm:^18.2.0"
-    typescript: "npm:^5.2.2"
-    vite: "npm:^5.1.6"
-    vite-tsconfig-paths: "npm:^4.3.2"
+  peerDependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
   languageName: unknown
   linkType: soft
 
@@ -1430,22 +1424,51 @@ __metadata:
     "@dnd-kit/core": "npm:^6.1.0"
     "@dnd-kit/modifiers": "npm:^7.0.0"
     "@dnd-kit/sortable": "npm:^8.0.0"
-    "@package/core": "npm:0.0.0"
+    "@emotion/react": "npm:^11.11.4"
+    "@emotion/styled": "npm:^11.11.5"
+    "@hookform/resolvers": "npm:^3.9.0"
+    "@mui/icons-material": "npm:^5.15.14"
+    "@mui/material": "npm:^5.15.14"
+    "@mui/styled-engine-sc": "npm:6.0.0-alpha.18"
+    "@mui/system": "npm:5.16.14"
+    "@mui/x-charts": "npm:^7.1.0"
+    "@mui/x-data-grid": "npm:^7.1.1"
+    "@mui/x-date-pickers": "npm:^8.9.0"
+    "@package/core": "workspace:*"
+    "@popperjs/core": "npm:^2.11.8"
     "@reduxjs/toolkit": "npm:^2.2.1"
-    "@types/react": "npm:^18.2.64"
-    "@types/react-dom": "npm:^18.2.21"
+    "@storybook/addon-actions": "npm:8.5.6"
+    "@storybook/react": "npm:^8.1.11"
+    "@tabler/icons-react": "npm:^3.2.0"
+    "@toast-ui/editor": "npm:3.2.2"
+    "@toast-ui/react-editor": "npm:^3.2.3"
+    "@types/dompurify": "npm:^3.2.0"
+    "@types/lodash": "npm:^4.17.23"
     "@types/react-resizable": "npm:^3.0.8"
-    "@vitejs/plugin-react": "npm:^4.2.1"
+    axios: "npm:^1.6.8"
     bootstrap: "npm:^5.3.3"
+    classnames: "npm:^2.5.1"
+    dayjs: "npm:^1.11.13"
+    dompurify: "npm:^3.3.1"
+    formik: "npm:^2.4.6"
+    immer: "npm:^10.1.1"
+    jwt-decode: "npm:^4.0.0"
     react: "npm:^18.2.0"
     react-bootstrap: "npm:^2.10.1"
     react-dom: "npm:^18.2.0"
+    react-hook-form: "npm:^7.55.0"
+    react-query: "npm:^3.39.3"
     react-redux: "npm:^9.1.0"
     react-resizable: "npm:^3.0.5"
     react-router-dom: "npm:^6.22.3"
-    typescript: "npm:^5.2.2"
-    vite: "npm:^5.1.6"
-    vite-tsconfig-paths: "npm:^4.3.2"
+    react-toastify: "npm:^10.0.5"
+    redux: "npm:^5.0.1"
+    redux-persist: "npm:^6.0.0"
+    simplebar-react: "npm:^3.2.4"
+    storybook: "npm:^8.1.11"
+    styled-components: "npm:^6.1.11"
+    use-immer: "npm:^0.10.0"
+    yup: "npm:^1.4.0"
   languageName: unknown
   linkType: soft
 
@@ -2238,7 +2261,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@toast-ui/editor@npm:^3.2.2":
+"@toast-ui/editor@npm:3.2.2, @toast-ui/editor@npm:^3.2.2":
   version: 3.2.2
   resolution: "@toast-ui/editor@npm:3.2.2"
   dependencies:
@@ -2459,7 +2482,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.2.21, @types/react-dom@npm:^18.3.0":
+"@types/react-dom@npm:^18.2.21":
   version: 18.3.5
   resolution: "@types/react-dom@npm:18.3.5"
   peerDependencies:
@@ -2495,7 +2518,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^18.2.64, @types/react@npm:^18.3.3":
+"@types/react@npm:^18.2.64":
   version: 18.3.18
   resolution: "@types/react@npm:18.3.18"
   dependencies:
@@ -2554,7 +2577,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:7.18.0, @typescript-eslint/eslint-plugin@npm:^7.13.1, @typescript-eslint/eslint-plugin@npm:^7.2.0":
+"@typescript-eslint/eslint-plugin@npm:^7.2.0":
   version: 7.18.0
   resolution: "@typescript-eslint/eslint-plugin@npm:7.18.0"
   dependencies:
@@ -2577,7 +2600,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:7.18.0, @typescript-eslint/parser@npm:^7.13.1, @typescript-eslint/parser@npm:^7.2.0":
+"@typescript-eslint/parser@npm:^7.2.0":
   version: 7.18.0
   resolution: "@typescript-eslint/parser@npm:7.18.0"
   dependencies:
@@ -2742,7 +2765,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-react@npm:^4.2.1, @vitejs/plugin-react@npm:^4.3.1":
+"@vitejs/plugin-react@npm:^4.2.1":
   version: 4.3.4
   resolution: "@vitejs/plugin-react@npm:4.3.4"
   dependencies:
@@ -4400,7 +4423,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-hooks@npm:^4.6.0, eslint-plugin-react-hooks@npm:^4.6.2":
+"eslint-plugin-react-hooks@npm:^4.6.0":
   version: 4.6.2
   resolution: "eslint-plugin-react-hooks@npm:4.6.2"
   peerDependencies:
@@ -4409,7 +4432,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-refresh@npm:^0.4.5, eslint-plugin-react-refresh@npm:^0.4.7":
+"eslint-plugin-react-refresh@npm:^0.4.5":
   version: 0.4.19
   resolution: "eslint-plugin-react-refresh@npm:0.4.19"
   peerDependencies:
@@ -4487,7 +4510,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.0.1, eslint@npm:^8.57.0":
+"eslint@npm:^8.0.1":
   version: 8.57.1
   resolution: "eslint@npm:8.57.1"
   dependencies:
@@ -5705,27 +5728,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "liberty5@workspace:."
   dependencies:
-    "@emotion/react": "npm:^11.11.4"
-    "@emotion/styled": "npm:^11.11.5"
-    "@hookform/resolvers": "npm:^3.9.0"
-    "@mui/icons-material": "npm:^5.15.14"
-    "@mui/material": "npm:^5.15.14"
-    "@mui/styled-engine-sc": "npm:6.0.0-alpha.18"
-    "@mui/x-charts": "npm:^7.1.0"
-    "@mui/x-data-grid": "npm:^7.1.1"
-    "@mui/x-date-pickers": "npm:^8.9.0"
-    "@tabler/icons-react": "npm:^3.2.0"
-    "@toast-ui/react-editor": "npm:^3.2.3"
-    "@types/dompurify": "npm:^3.2.0"
-    "@types/lodash": "npm:^4.17.23"
     "@types/node": "npm:^20.11.27"
+    "@types/react": "npm:^18.2.64"
+    "@types/react-dom": "npm:^18.2.21"
     "@typescript-eslint/eslint-plugin": "npm:^7.2.0"
     "@typescript-eslint/parser": "npm:^7.2.0"
-    axios: "npm:^1.6.8"
-    bootstrap: "npm:^5.3.3"
-    classnames: "npm:^2.5.1"
-    dayjs: "npm:^1.11.13"
-    dompurify: "npm:^3.3.1"
+    "@vitejs/plugin-react": "npm:^4.2.1"
     eslint: "npm:^8.0.1"
     eslint-config-airbnb: "npm:^19.0.4"
     eslint-config-airbnb-typescript: "npm:^18.0.0"
@@ -5738,20 +5746,11 @@ __metadata:
     eslint-plugin-react: "npm:^7.34.0"
     eslint-plugin-react-hooks: "npm:^4.6.0"
     eslint-plugin-react-refresh: "npm:^0.4.5"
-    formik: "npm:^2.4.6"
-    immer: "npm:^10.1.1"
-    jwt-decode: "npm:^4.0.0"
+    eslint-plugin-storybook: "npm:^0.8.0"
     prettier: "npm:^3.2.5"
-    react-bootstrap: "npm:^2.10.1"
-    react-hook-form: "npm:^7.55.0"
-    react-query: "npm:^3.39.3"
-    react-toastify: "npm:^10.0.5"
-    redux-persist: "npm:^6.0.0"
-    simplebar-react: "npm:^3.2.4"
-    typescript: "npm:*"
-    typescript-eslint: "npm:^7.2.0"
-    use-immer: "npm:^0.10.0"
-    yup: "npm:^1.4.0"
+    typescript: "npm:^5.2.2"
+    vite: "npm:^5.1.6"
+    vite-tsconfig-paths: "npm:^4.3.2"
   languageName: unknown
   linkType: soft
 
@@ -6713,7 +6712,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.2.0, react-dom@npm:^18.3.1":
+"react-dom@npm:^18.2.0":
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
   dependencies:
@@ -6903,7 +6902,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18.2.0, react@npm:^18.3.1":
+"react@npm:^18.2.0":
   version: 18.3.1
   resolution: "react@npm:18.3.1"
   dependencies:
@@ -7520,7 +7519,10 @@ __metadata:
   resolution: "storybook@workspace:storybook"
   dependencies:
     "@chromatic-com/storybook": "npm:1.6.1"
-    "@package/core": "npm:0.0.0"
+    "@emotion/react": "npm:^11.11.4"
+    "@emotion/styled": "npm:^11.11.5"
+    "@mui/material": "npm:^5.15.14"
+    "@package/core": "workspace:*"
     "@storybook/addon-essentials": "npm:^8.1.11"
     "@storybook/addon-interactions": "npm:^8.1.11"
     "@storybook/addon-links": "npm:^8.1.11"
@@ -7529,22 +7531,12 @@ __metadata:
     "@storybook/react": "npm:^8.1.11"
     "@storybook/react-vite": "npm:^8.1.11"
     "@storybook/test": "npm:^8.1.11"
-    "@types/react": "npm:^18.3.3"
-    "@types/react-dom": "npm:^18.3.0"
-    "@typescript-eslint/eslint-plugin": "npm:^7.13.1"
-    "@typescript-eslint/parser": "npm:^7.13.1"
-    "@vitejs/plugin-react": "npm:^4.3.1"
-    eslint: "npm:^8.57.0"
-    eslint-plugin-react-hooks: "npm:^4.6.2"
-    eslint-plugin-react-refresh: "npm:^0.4.7"
-    eslint-plugin-storybook: "npm:^0.8.0"
-    react: "npm:^18.3.1"
-    react-dom: "npm:^18.3.1"
+    react: "npm:^18.2.0"
+    react-dom: "npm:^18.2.0"
+    react-redux: "npm:^9.1.0"
     storybook: "npm:^8.1.11"
     styled-components: "npm:^6.1.11"
-    typescript: "npm:^5.2.2"
-    vite: "npm:^5.3.1"
-    vite-tsconfig-paths: "npm:^4.3.2"
+    vite: "npm:^5.1.6"
   languageName: unknown
   linkType: soft
 
@@ -7990,23 +7982,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript-eslint@npm:^7.2.0":
-  version: 7.18.0
-  resolution: "typescript-eslint@npm:7.18.0"
-  dependencies:
-    "@typescript-eslint/eslint-plugin": "npm:7.18.0"
-    "@typescript-eslint/parser": "npm:7.18.0"
-    "@typescript-eslint/utils": "npm:7.18.0"
-  peerDependencies:
-    eslint: ^8.56.0
-  peerDependenciesMeta:
-    typescript:
-      optional: true
-  checksum: 10c0/610c0faa70b9be89255086378c7ef69e979115c89be69851fb4d69e76907b3520450b162a8adee56b32dbf368f8c14c1fac88065539012140c1319851f2676da
-  languageName: node
-  linkType: hard
-
-"typescript@npm:*, typescript@npm:^5.2.2":
+"typescript@npm:^5.2.2":
   version: 5.7.3
   resolution: "typescript@npm:5.7.3"
   bin:
@@ -8016,7 +7992,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A*#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.2.2#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A^5.2.2#optional!builtin<compat/typescript>":
   version: 5.7.3
   resolution: "typescript@patch:typescript@npm%3A5.7.3#optional!builtin<compat/typescript>::version=5.7.3&hash=5adc0c"
   bin:
@@ -8193,7 +8169,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^5.1.6, vite@npm:^5.3.1":
+"vite@npm:^5.1.6":
   version: 5.4.14
   resolution: "vite@npm:5.4.14"
   dependencies:
