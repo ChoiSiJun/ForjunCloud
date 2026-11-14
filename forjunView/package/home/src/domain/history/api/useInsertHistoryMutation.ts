@@ -17,6 +17,7 @@ export const useInsertHistoryMutation = () => {
   };
 
   return useMutationWithLoading<void, AxiosError, InsertHistoryRequest>({
+    retry: false,
     mutationFn: async (params: InsertHistoryRequest) => fetchHistorySave(params),
   });
 };

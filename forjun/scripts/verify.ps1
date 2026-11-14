@@ -16,8 +16,10 @@ try {
     if ($Suite -eq 'unit') {
         $testClasses = @(
             'forjun.web.module.history.application.HistoryServiceTest',
+            'forjun.web.module.history.api.HistoryRequestValidationTest',
             'forjun.web.module.personal.application.PersonalImageTest',
             'forjun.web.module.system.application.FileQueryServiceTest',
+            'forjun.web.module.system.application.FileUploadServiceTest',
             'forjun.web.module.system.infrastructure.storage.LocalFileStorageAdapterTest'
         )
         foreach ($testClass in $testClasses) {

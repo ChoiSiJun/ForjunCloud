@@ -1,6 +1,5 @@
 package forjun.web.module.history.api;
 
-
 import forjun.web.config.security.CustomUserDetail;
 import forjun.web.module.history.api.dto.CreateHistoryRequest;
 import forjun.web.module.history.api.dto.HistoryDetailResponse;
@@ -11,6 +10,7 @@ import forjun.web.module.history.application.port.in.HistoryUsecase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,14 +34,14 @@ public class HistoryApi {
     /** 히스토리 등록*/
     @Operation(summary = "히스토리 등록", description = "히스토리 등록")
     @PostMapping
-    public ResponseEntity<Void> registerHistory(@AuthenticationPrincipal CustomUserDetail user, @RequestBody CreateHistoryRequest request) {
+    public ResponseEntity<Void> registerHistory(@AuthenticationPrincipal CustomUserDetail user, @Valid @RequestBody CreateHistoryRequest request) {
         historyUsecase.createHistory(historyApiMapper.toCreateHistoryCommand(user.getUserId(),request));
         return ResponseEntity.ok().build();
     }
     /** 히스토리 업데이트 */
     @Operation(summary = "히스토리 업데이트", description = "히스토리 업데이트")
     @PutMapping("/{historyId}")
-    public ResponseEntity<Void> updateHistory(@AuthenticationPrincipal CustomUserDetail user , @PathVariable int historyId, @RequestBody UpdateHistoryRequest request){
+    public ResponseEntity<Void> updateHistory(@AuthenticationPrincipal CustomUserDetail user , @PathVariable int historyId, @Valid @RequestBody UpdateHistoryRequest request){
 
         //히스토리 유저체크
         historyUsecase.updateHistory(historyApiMapper.toUpdateHistoryCommand(user.getUserId() , historyId, request));
