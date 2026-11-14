@@ -43,8 +43,10 @@ Copy-Item forjun/src/main/resources/application.example.yml forjun/src/main/reso
 PostgreSQL DB와 스키마를 준비하고 해당 환경 변수를 서버 실행 터미널에 설정합니다.
 JWT 키는 HS256에 사용할 충분한 길이의 임의 비밀값(UTF-8 기준 최소 32바이트)을 사용합니다.
 예제는 `ddl-auto: validate`이므로 테이블을 자동 생성하지 않습니다.
-기존 DB를 새로 구성할 때는 별도로 스키마 준비가 필요합니다. 기존 이미지 데이터 이관 안내는
-[프로필 이미지 문서](forjun/docs/personal-images.md)를 참고하세요.
+빈 로컬 개발 DB를 처음 준비할 때는 접속 대상이 개발 전용인지 확인하고, 실행 터미널에서
+`$env:SPRING_JPA_HIBERNATE_DDL_AUTO = 'update'`를 한 번 지정한 뒤 `bootRun`을 실행합니다.
+테이블이 생성되면 서버를 종료하고 `Remove-Item Env:SPRING_JPA_HIBERNATE_DDL_AUTO`로 임시 설정을 해제합니다.
+기존 DB의 스키마 변경은 [프로필 이미지 문서](forjun/docs/personal-images.md)의 SQL을 확인한 뒤 적용합니다.
 
 ```powershell
 Set-Location forjun

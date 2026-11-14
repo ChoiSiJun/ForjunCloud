@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface UploadUsecase {
     
     //파일 업로드 서비스
-    public UploadFile uploadFile(MultipartFile multipartFile , String directory);
+    public UploadFile uploadFile(MultipartFile multipartFile, String directory, String ownerId);
 
-    public void deleteFile(String fileId);
+    public void deleteFile(String fileId, String ownerId);
 }

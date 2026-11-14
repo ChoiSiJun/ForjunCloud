@@ -8,9 +8,10 @@ import java.time.LocalDateTime;
  * 시스템에 저장된 모든 파일의 핵심 정보를 담는 불변 도메인 모델
  */
 @Getter
-@Builder
+@Builder(toBuilder = true)
 public class UploadFile {
 
+    private final String ownerId;
     private final String fileId;        // 파일의 고유 식별자
     private final String originalName;  // 원본 파일명
     private final String storedPath;    // 파일 저장 경로 (S3 key)

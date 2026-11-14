@@ -13,4 +13,6 @@
 
 The JPA mapping now expects `personal.profile_image_id`. Schema auto-update does not migrate URL values into IDs. The manual script in `migrations/personal-profile-image-id.sql` backfills IDs by matching legacy relative URLs with `uploaded_file.file_url` and aborts if a match is missing/ambiguous. It preserves the legacy column. Review the actual database first, particularly if its column was already renamed or stores absolute URLs. This script is not auto-executed.
 
-This change checks file existence, not uploader ownership or actual image content; the current upload metadata does not identify the uploader.
+Apply `migrations/uploaded-file-owner.sql` before starting this version on an existing database. It adds the nullable owner column without assigning ownership to historical uploads.
+
+New uploads record the authenticated uploader and store a SHA-256 hash of the file bytes. Each upload has its own ID and stored file. Attaching or deleting another user's upload returns `ACCESS_DENIED` (403). A historical upload without an owner can remain on a profile already referencing it, and ordinary users cannot delete it or attach it to another profile. The public download route retains its existing behavior.

@@ -36,10 +36,20 @@ public class PersonalService implements PersonalUseCase , PersonalQuery {
     @Override
     public void savePersonal(SavePersonalCommand command) {
 
-        if (command.profile_image_id() != null
-                && (command.profile_image_id().isBlank()
-                || personalImagePort.findImage(command.profile_image_id()).isEmpty())) {
-            throw AppException.of(ErrorCode.FILE_NOT_FOUND);
+        String fileId = command.profile_image_id();
+        if (fileId != null) {
+            if (fileId.isBlank()) {
+                throw AppException.of(ErrorCode.FILE_NOT_FOUND);
+            }
+            var image = personalImagePort.findImage(fileId)
+                    .orElseThrow(() -> AppException.of(ErrorCode.FILE_NOT_FOUND));
+            // 소유자 정보가 없는 기존 파일은 이미 연결된 프로필에서만 유지한다.
+            boolean ownsImage = command.userId().equals(image.ownerId());
+            boolean keepsLegacyImage = image.ownerId() == null && personalJpaAdapater.getPersonal(command.userId())
+                    .map(personal -> fileId.equals(personal.getProfile_image_id())).orElse(false);
+            if (!ownsImage && !keepsLegacyImage) {
+                throw AppException.of(ErrorCode.ACCESS_DENIED);
+            }
         }
 
         // 자기소개서 도메인 생성

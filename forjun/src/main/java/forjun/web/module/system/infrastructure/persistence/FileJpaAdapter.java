@@ -19,12 +19,7 @@ public class FileJpaAdapter implements FilePersistencePort {
     @Override
     public void save(UploadFile uploadFile) {
         UploadFileEntity uploadFileEntity = fileEntityMapper.toEntity(uploadFile);
-        fileRepository.save(uploadFileEntity);
-    }
-
-    @Override
-    public UploadFile getFileByHashData(String hashData) {
-        return fileEntityMapper.toDomain(fileRepository.findByHashData(hashData));
+        fileRepository.saveAndFlush(uploadFileEntity);
     }
 
     @Override

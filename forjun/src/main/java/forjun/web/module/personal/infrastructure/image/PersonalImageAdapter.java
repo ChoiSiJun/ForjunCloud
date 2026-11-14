@@ -14,6 +14,6 @@ public class PersonalImageAdapter implements PersonalImagePort {
     @Override
     public Optional<ImageInfo> findImage(String fileId) {
         return fileQuery.findFile(fileId)
-                .map(file -> new ImageInfo(file.fileId(), file.url()));
+                .map(file -> new ImageInfo(file.fileId(), file.url(), file.ownerId()));
     }
 }

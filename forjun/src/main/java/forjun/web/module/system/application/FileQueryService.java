@@ -23,6 +23,6 @@ public class FileQueryService implements FileQuery {
     public Optional<FileInfo> findFile(String fileId) {
         return Optional.ofNullable(persistence.getFile(fileId))
                 .map(file -> new FileInfo(file.getFileId(),
-                        resourceDomain + resourceUrl + file.getUrl()));
+                        resourceDomain + resourceUrl + file.getUrl(), file.getOwnerId()));
     }
 }

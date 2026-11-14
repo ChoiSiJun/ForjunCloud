@@ -16,6 +16,8 @@ import java.nio.file.LinkOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.DigestInputStream;
+import java.util.HexFormat;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
@@ -97,7 +99,8 @@ public class LocalFileStorageAdapter implements FileStoragePort {
                     }
                 }
             }
-            try (InputStream input = file.getInputStream()) {
+            var digest = DigestUtils.getSha256Digest();
+            try (InputStream input = new DigestInputStream(file.getInputStream(), digest)) {
                 Files.copy(input, targetLocation);
             }
 
@@ -109,7 +112,7 @@ public class LocalFileStorageAdapter implements FileStoragePort {
                     .size(file.getSize())
                     .contentType(file.getContentType())
                     .uploadAt(uploadDate)
-                    .hashData(DigestUtils.sha256Hex(file.getInputStream() + directory))
+                    .hashData(HexFormat.of().formatHex(digest.digest()))
                     .build();
 
         } catch (IOException e) {

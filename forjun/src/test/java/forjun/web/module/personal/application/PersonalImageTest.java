@@ -29,7 +29,7 @@ class PersonalImageTest {
     @Test void resolvesImageAndExposesIdAndUrl() {
         givenPersonal("file-1");
         when(images.findImage("file-1")).thenReturn(Optional.of(
-                new PersonalImagePort.ImageInfo("file-1", "/files/profile/a.png")));
+                new PersonalImagePort.ImageInfo("file-1", "/files/profile/a.png", "owner")));
         var response = new PersonalApiMapper().toPersonalResponseDto(
                 service.getPersonal(new GetPersonalQuery("owner")));
         assertThat(response.profileImageId()).isEqualTo("file-1");
@@ -58,7 +58,7 @@ class PersonalImageTest {
     @Test void publicPersonalAlsoResolvesImage() {
         givenPersonal("file-1");
         when(users.getUserByUserId(any())).thenReturn(User.builder().personalPrivate("PUBLIC").build());
-        when(images.findImage("file-1")).thenReturn(Optional.of(new PersonalImagePort.ImageInfo("file-1", "/image")));
+        when(images.findImage("file-1")).thenReturn(Optional.of(new PersonalImagePort.ImageInfo("file-1", "/image", "owner")));
         assertThat(service.getPublicPersonal(new GetPublicPersonalQuery("owner")).profileImageUrl()).isEqualTo("/image");
     }
 
@@ -78,16 +78,38 @@ class PersonalImageTest {
     }
 
     @Test void savePersistsFileId() {
-        when(images.findImage("file-1")).thenReturn(Optional.of(new PersonalImagePort.ImageInfo("file-1", "/image")));
+        when(images.findImage("file-1")).thenReturn(Optional.of(new PersonalImagePort.ImageInfo("file-1", "/image", "owner")));
         service.savePersonal(command("file-1"));
         verify(persistence).savePersonal(argThat(p -> "file-1".equals(p.getProfile_image_id())));
     }
 
+    @Test void saveRejectsAnotherUsersFile() {
+        when(images.findImage("file-1")).thenReturn(Optional.of(
+                new PersonalImagePort.ImageInfo("file-1", "/image", "other")));
+        assertThatThrownBy(() -> service.savePersonal(command("file-1")))
+                .isInstanceOf(AppException.class)
+                .satisfies(error -> assertThat(((AppException) error).getErrorCode()).isEqualTo("ACCESS_DENIED"));
+        verifyNoInteractions(persistence);
+    }
+
+    @Test void legacyFileCanOnlyRemainOnItsExistingProfile() {
+        when(images.findImage("legacy")).thenReturn(Optional.of(
+                new PersonalImagePort.ImageInfo("legacy", "/image", null)));
+        givenPersonal("different-file");
+        assertThatThrownBy(() -> service.savePersonal(command("legacy")))
+                .isInstanceOf(AppException.class);
+        verify(persistence, never()).savePersonal(any());
+
+        givenPersonal("legacy");
+        service.savePersonal(command("legacy"));
+        verify(persistence).savePersonal(argThat(personal -> "legacy".equals(personal.getProfile_image_id())));
+    }
+
     @Test void adapterMapsUploadContractToPersonalContract() {
         FileQuery query = mock(FileQuery.class);
-        when(query.findFile("file-1")).thenReturn(Optional.of(new FileQuery.FileInfo("file-1", "/image")));
+        when(query.findFile("file-1")).thenReturn(Optional.of(new FileQuery.FileInfo("file-1", "/image", "owner")));
         assertThat(new PersonalImageAdapter(query).findImage("file-1"))
-                .contains(new PersonalImagePort.ImageInfo("file-1", "/image"));
+                .contains(new PersonalImagePort.ImageInfo("file-1", "/image", "owner"));
     }
 
     SavePersonalCommand command(String id) {

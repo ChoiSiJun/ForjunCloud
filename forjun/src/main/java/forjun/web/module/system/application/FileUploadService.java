@@ -9,10 +9,9 @@ import forjun.web.module.system.application.port.out.InvalidUploadPathException;
 import forjun.web.module.system.domain.UploadFile;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import java.util.Objects;
+import org.springframework.util.StringUtils;
 
 @Service
 @Transactional
@@ -23,23 +22,20 @@ public class FileUploadService implements UploadUsecase {
     private final FilePersistencePort filePersistencePort;
 
     @Override
-    public UploadFile uploadFile(MultipartFile multipartFile , String directory) {
+    public UploadFile uploadFile(MultipartFile multipartFile, String directory, String ownerId) {
 
-        if (multipartFile == null || multipartFile.isEmpty() || Objects.requireNonNull(multipartFile.getOriginalFilename()).isEmpty()) {
+        if (!StringUtils.hasText(ownerId)) {
+            throw AppException.of(ErrorCode.ACCESS_DENIED);
+        }
+        if (multipartFile == null || multipartFile.isEmpty() || !StringUtils.hasText(multipartFile.getOriginalFilename())) {
             throw new AppException(ErrorCode.FILE_NOT_FOUND);
         }
 
         UploadFile uploadFile = null;
 
         try {
-            //기존 파일 해쉬데이터 확인
-            uploadFile = filePersistencePort.getFileByHashData(DigestUtils.sha256Hex(multipartFile.getInputStream() + directory));
-            if(uploadFile != null) {
-                return uploadFile;
-            }
-
             // 1. 파일 시스템에 저장 (IO 작업)
-            uploadFile = fileStoragePort.save(multipartFile , directory);
+            uploadFile = fileStoragePort.save(multipartFile, directory).toBuilder().ownerId(ownerId).build();
 
             // 2. 파일 메타데이터 DB 저장 (DB 트랜잭션 범위)
             filePersistencePort.save(uploadFile);
@@ -63,9 +59,12 @@ public class FileUploadService implements UploadUsecase {
     }
 
     @Override
-    public void deleteFile(String fileId) {
+    public void deleteFile(String fileId, String ownerId) {
 
         UploadFile uploadFile = filePersistencePort.getFile(fileId);
+        if (uploadFile != null && (!StringUtils.hasText(ownerId) || !ownerId.equals(uploadFile.getOwnerId()))) {
+            throw AppException.of(ErrorCode.ACCESS_DENIED);
+        }
 
         //파일 삭제 시작
         if (uploadFile != null) {

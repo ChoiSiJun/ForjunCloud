@@ -5,5 +5,5 @@ import java.util.Optional;
 public interface FileQuery {
     Optional<FileInfo> findFile(String fileId);
 
-    record FileInfo(String fileId, String url) {}
+    record FileInfo(String fileId, String url, String ownerId) {}
 }

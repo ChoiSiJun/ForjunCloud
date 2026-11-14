@@ -12,6 +12,7 @@ type UploadRes = GetResponseType<typeof END_POINT>;
 // 파일 업로드 Mutation
 const useFileUploadMutation = () => {
   return useMutationWithLoading<UploadRes, AxiosError, UploadReq>({
+    retry: false,
     mutationFn: async ({ uploadFile, directory = '' }) => {
       if (uploadFile == null) {
         throw Error('파일이 비어있습니다.');

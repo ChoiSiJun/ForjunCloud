@@ -70,7 +70,7 @@ class LocalFileStorageAdapterTest {
         var service = new FileUploadService(adapter, persistence);
 
         AppException error = assertThrows(AppException.class,
-                () -> service.uploadFile(file(), "../outside"));
+                () -> service.uploadFile(file(), "../outside", "owner"));
 
         assertThat(error.getHttpStatus()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(error.getErrorCode()).isEqualTo("INVALID_UPLOAD_PATH");

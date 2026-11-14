@@ -21,6 +21,9 @@ public class UploadFileEntity {
     @Column(name = "FILE_ID", nullable = false, unique = true, length = 36)
     private String fileId;
 
+    @Column(name = "OWNER_ID")
+    private String ownerId;
+
     // 클라이언트가 업로드한 원본 파일 이름
     @Column(name = "ORIGINAL_NAME", nullable = false, length = 255)
     private String originalName;
