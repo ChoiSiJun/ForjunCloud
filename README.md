@@ -31,21 +31,24 @@ Gradle은 `forjun/gradlew.bat`, Yarn은 `forjunView/.yarn/releases/yarn-4.1.1.cj
 ## 로컬 설정과 실행
 
 아래 명령은 각각 **상위 저장소 루트**에서 시작합니다. 서버는 별도 터미널에서 실행합니다.
-기존 로컬 설정이 있으면 복사 명령으로 덮어쓰지 말고 현재 값을 유지하세요.
+기존 프런트 로컬 설정이 있으면 복사 명령으로 덮어쓰지 마세요.
 
 ### 백엔드
 
-```powershell
-Copy-Item forjun/src/main/resources/application.example.yml forjun/src/main/resources/application.yml
-```
+`application.yml`과 `application-prod.yml`을 Git에서 함께 받습니다.
+PostgreSQL DB를 준비하고 서버를 실행할 터미널 또는 IDE에 아래 값을 설정합니다.
 
-복사한 설정은 환경 변수 `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET_KEY`를 사용합니다.
-PostgreSQL DB와 스키마를 준비하고 해당 환경 변수를 서버 실행 터미널에 설정합니다.
+| 환경 변수 | 값 |
+| --- | --- |
+| `DB_URL` | PostgreSQL JDBC URL |
+| `DB_USERNAME`, `DB_PASSWORD` | 해당 환경의 DB 접속 계정과 비밀번호 |
+| `JWT_SECRET_KEY` | 해당 환경의 JWT 서명 키 |
+| `SERVER_PORT` | 서버 포트. 기본값은 `8085` |
+| `FILE_UPLOAD_PATH` | 업로드 디렉터리. 개발 기본값은 `./uploads/`, 운영에서는 지정 필요 |
+| `FILE_UPLOAD_DOMAIN` | 파일 URL의 공개 주소. 개발 기본값은 `http://localhost:8085`, 운영에서는 지정 필요 |
+
 JWT 키는 HS256에 사용할 충분한 길이의 임의 비밀값(UTF-8 기준 최소 32바이트)을 사용합니다.
-예제는 `ddl-auto: validate`이므로 테이블을 자동 생성하지 않습니다.
-빈 로컬 개발 DB를 처음 준비할 때는 접속 대상이 개발 전용인지 확인하고, 실행 터미널에서
-`$env:SPRING_JPA_HIBERNATE_DDL_AUTO = 'update'`를 한 번 지정한 뒤 `bootRun`을 실행합니다.
-테이블이 생성되면 서버를 종료하고 `Remove-Item Env:SPRING_JPA_HIBERNATE_DDL_AUTO`로 임시 설정을 해제합니다.
+기본 개발 설정은 `ddl-auto: update`이므로 개발 전용 DB에 연결합니다. 운영 프로필은 `validate`를 사용합니다.
 기존 DB의 스키마 변경은 [프로필 이미지 문서](forjun/docs/personal-images.md)의 SQL을 확인한 뒤 적용합니다.
 
 ```powershell
@@ -94,7 +97,7 @@ node .yarn/releases/yarn-4.1.1.cjs dev
 프런트 산출물은 `forjunView/package/home/dist`입니다.
 운영 프런트 예제의 API 주소 `/server`는 `forjunView/default.conf`의 프록시 구성을 전제로 합니다.
 이 설정은 `backend:8085`로 전달하므로 실제 배포의 호스트·네트워크와 일치시켜야 합니다.
-운영 백엔드 프로필과 비밀값은 배포 환경에서 별도로 공급합니다.
+운영 백엔드는 `SPRING_PROFILES_ACTIVE=prod`로 실행합니다. 운영용 환경 변수는 배포 환경에서 공급합니다.
 
 ## 하네스와 Git 작업
 

@@ -43,16 +43,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Local configuration; commit sanitized examples instead.
+# Local configuration; shared Spring profiles use environment variables.
 .env
 .env.*
 !.env.example
 !.env.*.example
 *.local
-/forjun/src/main/resources/application.yml
 /forjun/src/main/resources/application-*.yml
-!/forjun/src/main/resources/application.example.yml
-!/forjun/src/main/resources/application-*.example.yml
+!/forjun/src/main/resources/application-prod.yml
 *.pem
 *.key
 *.p12

@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: forjun
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        "[format_sql]": false
+        "[generate_statistics]": false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+
+server:
+  port: ${SERVER_PORT:8085}
+
+jwt:
+  secretKey: ${JWT_SECRET_KEY}
+
+logging:
+  level:
+    root: INFO
+    "[org.springframework.web]": INFO
+    "[org.hibernate.SQL]": WARN
+    "[org.hibernate.type.descriptor.sql]": WARN
+    "[org.hibernate.type.descriptor.sql.BasicBinder]": WARN
+    "[forjun]": INFO
+  file:
+    name: logs/forjun.log
+  pattern:
+    file: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+file:
+  upload:
+    resource-path: ${FILE_UPLOAD_PATH}
+    resource-domain: ${FILE_UPLOAD_DOMAIN}
+    resource-url: /api/files/download/
+
