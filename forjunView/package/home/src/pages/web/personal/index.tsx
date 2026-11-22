@@ -1,12 +1,14 @@
 import { Box, Avatar, Typography, Paper, Grid, Chip, Stack, Divider, alpha, useTheme } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { Work as WorkIcon, School as SchoolIcon, EmojiEvents as AwardIcon, Verified as CertificateIcon, Code as CodeIcon, Person as PersonIcon } from '@mui/icons-material';
-import useWebPersonalQuery from '@domain/personal/api/useWebPersonalQuery';
+import usePublicPersonal from '@domain/personal/hooks/usePublicPersonal';
+import useRecordPublicPageView from '@domain/pageview/hooks/useRecordPublicPageView';
 import WepContentBox from '@pages/web/components/WebContentBox';
 
 const OpenPersonal = () => {
   const { userId } = useParams();
-  const { data: personalData, isLoading, isError } = useWebPersonalQuery({ userId: userId || '' });
+  const { data: personalData, isLoading, isError, isFetchedAfterMount } = usePublicPersonal(userId || '');
+  useRecordPublicPageView(userId, 'PERSONAL', isFetchedAfterMount && !isError && Boolean(personalData));
   const theme = useTheme();
 
   if (isLoading) {

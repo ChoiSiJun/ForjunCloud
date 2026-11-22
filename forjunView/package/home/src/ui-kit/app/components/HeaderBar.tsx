@@ -2,8 +2,10 @@ import Toolbar from '@mui/material/Toolbar';
 import { useMediaQuery, useTheme } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 import MenuIcon from '@mui/icons-material/Menu';
 import EditIcon from '@mui/icons-material/Edit';
+import LogoutIcon from '@mui/icons-material/Logout';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
@@ -42,10 +44,11 @@ interface HeaderBarProps {
   headerBarHeight: number;
   sidebarWidth: number;
   title: string;
+  onLogout: () => void;
 }
 
 // Liberty HeaderBar 컴포넌트
-const HeaderBar = ({ title, headerBarHeight, sidebarWidth, setSidebarOpen, isSidebarOpen }: HeaderBarProps) => {
+const HeaderBar = ({ title, headerBarHeight, sidebarWidth, setSidebarOpen, isSidebarOpen, onLogout }: HeaderBarProps) => {
   const currentTheme = useTheme(); // 현재 테마 객체 가져오기
   const lgUp = useMediaQuery(currentTheme.breakpoints.up('lg'));
   const navigate = useNavigate();
@@ -81,7 +84,7 @@ const HeaderBar = ({ title, headerBarHeight, sidebarWidth, setSidebarOpen, isSid
           aria-label="open drawer"
           onClick={HandleMobileSideOpen}
           sx={{
-            marginRight: '36px',
+            marginRight: { xs: 1, sm: '36px' },
           }}
         >
           <MenuIcon />
@@ -89,9 +92,16 @@ const HeaderBar = ({ title, headerBarHeight, sidebarWidth, setSidebarOpen, isSid
         <Typography component="h1" variant="h4" color="inherit" noWrap sx={{ flexGrow: 1 }}>
           {title}
         </Typography>
-        <IconButton color="inherit" onClick={handleEditClick} aria-label="개인정보 수정">
-          <EditIcon />
-        </IconButton>
+        <Tooltip title="개인정보 수정">
+          <IconButton color="inherit" onClick={handleEditClick} aria-label="개인정보 수정">
+            <EditIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="로그아웃">
+          <IconButton color="inherit" onClick={onLogout} aria-label="로그아웃">
+            <LogoutIcon />
+          </IconButton>
+        </Tooltip>
       </Toolbar>
     </AppBar>
   );

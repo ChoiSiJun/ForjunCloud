@@ -138,7 +138,7 @@ const SideBarHeader = () => {
     >
       {/* 로고 영역 */}
       <LinkStyled
-        to="/liberty/dashboard"
+        to="/forjun/dashboard"
         aria-label="대시보드"
         style={{
           display: 'flex',

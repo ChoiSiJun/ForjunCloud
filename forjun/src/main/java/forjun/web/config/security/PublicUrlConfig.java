@@ -22,7 +22,8 @@ public class PublicUrlConfig {
                 ),
                 "POST", List.of(
                     "/api/v1/user", // 이용자 회원가입
-                    "/api/v1/user/login" // 이용자 로그인
+                    "/api/v1/user/login", // 이용자 로그인
+                    "/api/v1/public-page-views"
                 )
         );
     }

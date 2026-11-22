@@ -2,7 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import MenuSlice from 'store/slice/MenuSlice';
 import AuthSlice from 'store/slice/AuthSlice';
-import { persistReducer } from 'redux-persist';
+import { persistReducer, persistStore } from 'redux-persist';
 import sessionStorage from 'redux-persist/lib/storage/session';
 import ModalSlice from 'store/slice/ModalSlice';
 import LoadingSlice from 'store/slice/LoadingSlice';
@@ -28,6 +28,8 @@ export const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({ serializableCheck: false }),
 });
+
+export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

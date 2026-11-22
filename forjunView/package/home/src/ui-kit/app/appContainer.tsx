@@ -13,8 +13,12 @@ import Container from '@mui/material/Container';
 import { useMediaQuery } from '@mui/material';
 
 // 라우터 Import
-import { Outlet } from 'react-router-dom';
-import GlobalQueryLoadingWrapper from '@common/ui/template/GlobalQueryLoadingWrapper';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
+import { useAppDispatch } from 'store/ReduxHooks';
+import { persistor } from 'store/ReduxStoreConfig';
+import { authDelete } from 'store/slice/AuthSlice';
+import GlobalQueryLoadingWrapper from '@ui-kit/app/components/feedback/GlobalQueryLoadingWrapper';
 
 // 헤더바 높이
 const headerBarHeight: number = 70;
@@ -25,6 +29,16 @@ const sidebarWidth: number = 270;
 export default function AppContainer() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const isDesktop = useMediaQuery(appTheme.breakpoints.up('lg'));
+  const dispatch = useAppDispatch();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(authDelete());
+    persistor.flush();
+    queryClient.clear();
+    navigate('/login', { replace: true });
+  };
 
   return (
     <ThemeProvider theme={appTheme}>
@@ -59,6 +73,7 @@ export default function AppContainer() {
             isSidebarOpen={isSidebarOpen}
             sidebarWidth={sidebarWidth}
             title="Fortun Cloud"
+            onLogout={handleLogout}
           />
 
           <Container

@@ -46,6 +46,8 @@ export default function WebContainer() {
         <Box
           sx={{
             height: 64,
+            flexShrink: 0,
+            overflowX: 'auto',
             px: 4,
             bgcolor: 'rgba(255,255,255,0.98)',
             backdropFilter: 'blur(12px)',
@@ -70,6 +72,14 @@ export default function WebContainer() {
               display: 'inline-flex',
             }}
           >
+            <Button
+              onClick={() => navigate(`${basePath}/${userId}/profile/summary`)}
+              aria-current={location.pathname.endsWith('/summary') ? 'page' : undefined}
+              variant={location.pathname.endsWith('/summary') ? 'contained' : 'text'}
+              sx={{ flexShrink: 0 }}
+            >
+              프로필 요약
+            </Button>
             <Button
               onClick={() => {
                 setActiveTab('PERSONAL');

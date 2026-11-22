@@ -1,21 +1,18 @@
 import ReactDOM from 'react-dom/client';
 import ForjunRouter from '@router';
 import { Provider } from 'react-redux';
-import { store } from 'store/ReduxStoreConfig';
-import { persistStore } from 'redux-persist';
+import { persistor, store } from 'store/ReduxStoreConfig';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import 'react-toastify/dist/ReactToastify.css';
-import Toast from '@common/ui/elements/feedback/ReactToast';
+import Toast from '@ui-kit/app/components/feedback/ReactToast';
 
 import { QueryClientProvider, QueryClient } from 'react-query';
-import Modal from '@common/ui/modules/Modal';
-import SjConfirmDialog from '@common/ui/modules/SjConfirmDialog';
-import GlobalMutationLoading from '@common/ui/template/GlobalMutationLoading';
-import GlobalQueryLoadingWrapper from '@common/ui/template/GlobalQueryLoadingWrapper';
+import Modal from '@ui-kit/app/components/feedback/Modal';
+import SjConfirmDialog from '@ui-kit/app/components/feedback/SjConfirmDialog';
+import GlobalMutationLoading from '@ui-kit/app/components/feedback/GlobalMutationLoading';
+import GlobalQueryLoadingWrapper from '@ui-kit/app/components/feedback/GlobalQueryLoadingWrapper';
 import { BrowserRouter } from 'react-router-dom';
-
-const persistor = persistStore(store);
 
 const queryClient = new QueryClient({
   defaultOptions: {

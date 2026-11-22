@@ -38,7 +38,7 @@ const Personal = () => {
         <AwardForm personalHook={personalHook} />
 
         {/* 제출 버튼 */}
-        <SjButton ButtonType="submit" buttonName="등록 수정" disabled={personalHook.isSaving || personalHook.formik.isSubmitting} />
+        <SjButton ButtonType="submit" buttonName="저장" disabled={personalHook.isSaving || personalHook.formik.isSubmitting} />
       </Box>
     </form>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { useWebHistoryListQuery } from '@domain/history/api/useWebHistoyQuery';
+import usePublicHistory from '@domain/history/hooks/usePublicHistory';
+import useRecordPublicPageView from '@domain/pageview/hooks/useRecordPublicPageView';
 import { useParams } from 'react-router-dom';
 import HistoryItem from '@pages/web/components/HistoryItem';
 import WepContentBox from '@pages/web/components/WebContentBox';
@@ -17,7 +18,9 @@ interface HistoryPageLayoutProps {
 
 export const HistoryPageLayout: React.FC<HistoryPageLayoutProps> = ({ category }) => {
   const { userId } = useParams();
-  const historyList = useWebHistoryListQuery({ category, userId }).data || [];
+  const { data, isError, isFetchedAfterMount } = usePublicHistory({ category, userId });
+  const historyList = data || [];
+  useRecordPublicPageView(userId, category, isFetchedAfterMount && !isError && historyList.length > 0);
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 

@@ -4,9 +4,11 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { isAxiosError } from 'axios';
 
 // Material-UI 컴포넌트
 import Avatar from '@mui/material/Avatar';
+import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -76,19 +78,25 @@ export default function Auth() {
     },
     validationSchema: Yup.object({
       userId: Yup.string().required('아이디는 필수 항목입니다.'),
-      password: Yup.string()
-        .required('비밀번호는 필수 항목입니다.')
-        .matches(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\\[\]{};':"\\|,.<>\\/?]).{8,}$/, '비밀번호는 최소 8자 이상이며, 영문, 숫자, 특수문자를 모두 포함해야 합니다.'),
+      password: Yup.string().required('비밀번호는 필수 항목입니다.'),
     }),
-    onSubmit: async values => {
-      // useUser의 login 핸들러 사용 (Redux 저장 및 토스트는 내부에서 처리)
-      await login(values);
+    onSubmit: async (values, { setStatus }) => {
+      setStatus(undefined);
+      try {
+        await login(values);
+      } catch (error) {
+        const code = isAxiosError<{ code?: string }>(error) ? error.response?.data?.code : undefined;
+        const invalidCredentials = code === 'PASSWORD_NOT_MATCH' || code === 'USER_NOT_FOUND';
+        setStatus(invalidCredentials
+          ? '아이디 또는 비밀번호가 일치하지 않습니다.'
+          : '로그인에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+      }
     },
   });
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid container component="main" sx={{ minHeight: '100vh' }}>
         <CssBaseline />
         <Grid
           item
@@ -106,8 +114,8 @@ export default function Auth() {
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
-              my: 8,
-              mx: 4,
+              my: { xs: 4, sm: 8 },
+              mx: { xs: 2, sm: 4 },
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -125,7 +133,8 @@ export default function Auth() {
               onSubmit={loginForm.handleSubmit}
               sx={{
                 mt: 1,
-                width: '320px',
+                width: '100%',
+                maxWidth: 352,
               }}
             >
               {/* 아이디 입력 필드 */}
@@ -155,7 +164,8 @@ export default function Auth() {
               </Grid>
 
               <FormControlLabel control={<Checkbox value="remember" color="primary" />} label="Remember me" />
-              <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+              {loginForm.status && <Alert severity="error" sx={{ mt: 1 }}>{loginForm.status}</Alert>}
+              <Button type="submit" fullWidth variant="contained" disabled={loginForm.isSubmitting} sx={{ mt: 3, mb: 2 }}>
                 Sign In
               </Button>
               <Grid container justifyContent="center">

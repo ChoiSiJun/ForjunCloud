@@ -6,7 +6,7 @@ import axios from '@config/axios/axios';
 type HistoryListRequest = GetRequestType<typeof HISTORY_API_ENDPOINTS.get>;
 type HistoryListResponse = GetResponseType<typeof HISTORY_API_ENDPOINTS.get>;
 
-const fetchHistoryList = async (params: HistoryListRequest): Promise<HistoryListResponse[]> => {
+export const fetchHistoryList = async (params: HistoryListRequest): Promise<HistoryListResponse[]> => {
   const response = await axios({
     method: HISTORY_API_ENDPOINTS.get.method,
     params,

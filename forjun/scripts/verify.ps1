@@ -17,6 +17,7 @@ try {
         $testClasses = @(
             'forjun.web.module.history.application.HistoryServiceTest',
             'forjun.web.module.history.api.HistoryRequestValidationTest',
+            'forjun.web.module.pageview.application.PageViewServiceTest',
             'forjun.web.module.personal.application.PersonalImageTest',
             'forjun.web.module.system.application.FileQueryServiceTest',
             'forjun.web.module.system.application.FileUploadServiceTest',

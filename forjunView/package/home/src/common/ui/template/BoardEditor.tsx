@@ -1,20 +1,17 @@
 import { useEffect, useRef } from 'react';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import useFileUploadMutation from '@domain/upload/api/useFileUploadMutation';
 import { toast } from 'react-toastify';
 
 interface BoardEditorProps {
   placeholder?: string;
-  directory?: string;
+  uploadImage: (file: File) => Promise<string>;
   value?: string;
   setValue: (value: string) => void;
 }
 
-const BoardEditor = ({ value = '', setValue, placeholder = '내용을 입력해주세요.', directory = 'etc' }: BoardEditorProps) => {
+const BoardEditor = ({ value = '', setValue, placeholder = '내용을 입력해주세요.', uploadImage }: BoardEditorProps) => {
   const editorRef = useRef<Editor>(null);
-
-  const { mutateAsync: uploadFile } = useFileUploadMutation();
 
   useEffect(() => {
     const editorInstance = editorRef.current?.getInstance();
@@ -40,8 +37,8 @@ const BoardEditor = ({ value = '', setValue, placeholder = '내용을 입력해�
     const file = new File([blob], fileName, { type: blob.type });
 
     try {
-      const response = await uploadFile({ uploadFile: file, directory });
-      callback(response.url, fileName);
+      const url = await uploadImage(file);
+      callback(url, fileName);
     } catch (error) {
       toast.error('이미지 업로드 실패');
     }

@@ -1,38 +1,43 @@
-export const personal = [
+export const CAREER = [
   {
-    moduleCode: 'PERSONAL_MAIN',
+    moduleCode: 'CAREER_MAIN',
     moduleName: 'Main',
-    modulePath: '/forjun/personal',
+    modulePath: '/forjun/personal-statement',
     menuList: [
       {
-        menuCode: 'PERSONAL_Main',
+        menuCode: 'CAREER_MAIN',
         menuName: 'PersonalStatement',
-        menuPath: '/forjun/personal',
+        menuPath: '/forjun/personal-statement',
+      },
+      {
+        menuCode: 'CAREER_PROFILE_SUMMARY',
+        menuName: 'Profile Summary',
+        menuPath: '/forjun/profile-summary',
       },
     ],
   },
   {
-    moduleCode: 'PERSONAL_History',
+    moduleCode: 'CAREER_HISTORY',
     moduleName: 'History',
     modulePath: '/forjun/history',
     menuList: [
       {
-        menuCode: 'PERSONAL_HISTORY_SI',
+        menuCode: 'CAREER_HISTORY_SI',
         menuName: 'SI History',
         menuPath: '/forjun/history/si',
       },
       {
-        menuCode: 'PERSONAL_HISTORY_SM',
+        menuCode: 'CAREER_HISTORY_SM',
         menuName: 'SM History',
         menuPath: '/forjun/history/sm',
       },
       {
-        menuCode: 'PERSONAL_HISTORY_RND',
+        menuCode: 'CAREER_HISTORY_RND',
         menuName: 'R&D History',
         menuPath: '/forjun/history/rnd',
       },
       {
-        menuCode: 'PERSONAL_HISTORY_TOY',
+        menuCode: 'CAREER_HISTORY_TOY',
         menuName: 'Toy History',
         menuPath: '/forjun/history/toy',
       },

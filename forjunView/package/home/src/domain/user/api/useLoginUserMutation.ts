@@ -1,10 +1,8 @@
 import axios from '@config/axios/axios';
-import { useMutationWithLoading } from '@config/hooks/useMutationWithLoading';
 import { AxiosError } from 'axios';
+import { useMutation } from 'react-query';
 import { USER_API_ENDPOINTS } from '@domain/user/api/userApi';
 import { GetRequestType } from '@common/utill/type-utils';
-import { authInsert } from '@store/slice/AuthSlice';
-import { useAppDispatch } from '@store/ReduxHooks';
 
 type LoginUserParams = GetRequestType<typeof USER_API_ENDPOINTS.login>;
 /**
@@ -12,10 +10,9 @@ type LoginUserParams = GetRequestType<typeof USER_API_ENDPOINTS.login>;
  * @returns 로그인 뮤테이션 훅
  */
 export const useLoginUserMutation = () => {
-  const dispatch = useAppDispatch();
-
   const endpoint = USER_API_ENDPOINTS.login;
-  return useMutationWithLoading<string, AxiosError, LoginUserParams>({
+  return useMutation<string, AxiosError, LoginUserParams>({
+    retry: false,
     mutationFn: async (params: LoginUserParams) => {
       const response = await axios({
         url: endpoint.url,
@@ -24,10 +21,6 @@ export const useLoginUserMutation = () => {
         timeout: 5000,
       });
       return response.data;
-    },
-
-    onSuccess: data => {
-      dispatch(authInsert(data));
     },
   });
 };

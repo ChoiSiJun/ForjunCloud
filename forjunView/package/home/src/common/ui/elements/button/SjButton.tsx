@@ -1,6 +1,5 @@
 import { styled } from '@mui/material';
 import Button, { ButtonProps } from '@mui/material/Button';
-import { useAppSelector } from 'store/ReduxHooks';
 
 type ButtonType =
   | 'submit' // 폼 제출용
@@ -16,7 +15,6 @@ type ButtonType =
 interface SjButtonProps extends ButtonProps {
   ButtonType: ButtonType;
   buttonName: string;
-  displayRule?: string;
 }
 
 // -----------------------------------------------------
@@ -30,17 +28,10 @@ const ButtonStyled = styled(Button)({
 const SjButton = ({
   ButtonType = 'default',
   buttonName,
-  displayRule = 'GUEST',
   size = 'small',
   onClick,
   ...rest
 }: SjButtonProps) => {
-  const role = useAppSelector(state => state.Auth.role);
-
-  // 1. 권한 체크
-  if (displayRule !== 'GUEST' && displayRule !== role) {
-    return null;
-  }
 
   // 2. ButtonType에 따라 달라지는 속성만 설정
   let variant: ButtonProps['variant'] = 'contained';

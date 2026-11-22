@@ -9,6 +9,7 @@ import { useCallback, useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { HistorySaveRequest, HistoryUpdateRequest } from '@domain/history/api/HistoryApi';
 import BoardEditor from '@common/ui/template/BoardEditor';
+import useFileUploadMutation from '@domain/upload/api/useFileUploadMutation';
 import useHistoryQuery from '@domain/history/api/useHistoryQuery';
 
 interface RegisterProps<T> {
@@ -25,6 +26,12 @@ const Register = <T extends HistorySaveRequest | HistoryUpdateRequest>({ onClick
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
   const [skillList, setSkillList] = useState<string[]>([]);
+
+  const { mutateAsync: uploadFile } = useFileUploadMutation();
+  const uploadHistoryImage = async (file: File) => {
+    const { url } = await uploadFile({ uploadFile: file, directory: 'history' });
+    return url;
+  };
 
   /** Hook */
   const registerForm = useFormik<HistorySaveRequest | HistoryUpdateRequest>({
@@ -131,7 +138,7 @@ const Register = <T extends HistorySaveRequest | HistoryUpdateRequest>({ onClick
         </Grid>
 
         <Grid item xs={12} sm={12} md={12} margin={1}>
-          <BoardEditor value={description} setValue={setDescription} directory="history" />
+          <BoardEditor value={description} setValue={setDescription} uploadImage={uploadHistoryImage} />
         </Grid>
 
         <Grid item xs={12} sm={12} md={12} margin={1}>

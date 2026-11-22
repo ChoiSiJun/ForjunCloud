@@ -4,6 +4,10 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
+  cacheDir: 'node_modules/.vite-home',
+  optimizeDeps: {
+    include: ['@mui/x-charts/LineChart'],
+  },
   server: {
     port: 3001, // 원하는 포트 번호로 설정
   },
