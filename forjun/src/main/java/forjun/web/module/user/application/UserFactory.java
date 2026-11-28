@@ -1,6 +1,5 @@
 package forjun.web.module.user.application;
 
-import forjun.web.module.user.application.port.in.dto.ChangeUserInfoCommand;
 import forjun.web.module.user.application.port.in.dto.JoinUserCommand;
 import forjun.web.module.user.domain.AuthorityStatus;
 import forjun.web.module.user.domain.PrivateStatus;
@@ -23,14 +22,4 @@ public class UserFactory {
             .build();
     }
 
-    /** 유저 정보 수정 도메인 생성 */
-    public static User createUser(ChangeUserInfoCommand command) {
-        return User.builder()
-            .userId(command.userId())
-            .userName(command.userName())
-            .email(command.email())
-            .historyPrivate(PrivateStatus.valueOf(command.historyPrivate()).name())
-            .personalPrivate(PrivateStatus.valueOf(command.personalPrivate()).name())
-            .build();
-    }
 }

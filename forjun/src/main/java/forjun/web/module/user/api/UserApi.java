@@ -76,9 +76,8 @@ public class UserApi {
         @AuthenticationPrincipal CustomUserDetail user,
         @Valid @RequestBody UpdateUserInfoRequest request
     ) {
-        // 개인정보 수정 (Service에서 userId로 조회 및 수정 처리)
         userUsecase.changeUserInfo(
-            userApiMapper.toChangeUserInfoCommand(user.getUserId(), request)
+            userApiMapper.toChangeUserInfoCommand(user.getId(), request)
         );
         
         return ResponseEntity.ok().build();

@@ -23,7 +23,7 @@
 - 기존 기능의 버그 수정·기능 개선에는 `.agents/skills/forjun-maintenance/SKILL.md`의 영향 분석·선택 검증 절차를 사용한다. 문서·포맷 수정에는 강제하지 않는다.
 
 - `powershell -NoProfile -File scripts/verify.ps1`은 DB 없는 기존 단위 테스트를 실행한다.
-- `powershell -NoProfile -File scripts/verify.ps1 -Suite full`은 contextLoads를 포함한 전체 테스트를 실행한다. 별도 테스트 DB 설정을 먼저 확인한다.
+- 기본 QA는 관련 단위·컨트롤러 검사만 실행한다. 사용자가 전체 검증을 별도로 요청하면 `powershell -NoProfile -File scripts/verify.ps1 -Suite full`로 contextLoads를 포함한 전체 테스트를 실행한다. 별도 테스트 DB 설정을 먼저 확인한다.
 - 사용자가 테스트 DB를 준비했다. DB 검증 시 실제 테스트 연결·프로필·데이터 격리 설정을 확인하고 기본 설정을 테스트 전용으로 추정하지 않는다.
 - 실행 환경·제약은 `docs/harness/TESTING.md`를 따른다. 운영 설정, 비밀값, 실제 업로드 파일은 작업 근거 없이 수정하지 않는다.
 - 프런트 계약이 바뀌면 메인에 경로·메서드·JSON 필드·null·오류 코드·호환성 영향을 전달한다.

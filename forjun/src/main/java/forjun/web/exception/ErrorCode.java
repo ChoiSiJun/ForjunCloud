@@ -6,6 +6,55 @@ import org.springframework.http.HttpStatus;
 @Getter
 public enum ErrorCode {
 
+    PROFILE_AI_SETTINGS_BODY_INVALID(
+            "연결 설정 요청 형식이 올바르지 않습니다.",
+            "Profile AI settings body invalid",
+            "PROFILE_AI_SETTINGS_BODY_INVALID",
+            HttpStatus.BAD_REQUEST
+    ),
+    PROFILE_AI_SETTINGS_URL_INVALID(
+            "연결 주소가 올바르지 않거나 허용되지 않은 주소입니다.",
+            "Profile AI settings URL invalid",
+            "PROFILE_AI_SETTINGS_URL_INVALID",
+            HttpStatus.BAD_REQUEST
+    ),
+    PROFILE_AI_SETTINGS_MODEL_INVALID(
+            "모델 이름을 확인해 주세요.",
+            "Profile AI settings model invalid",
+            "PROFILE_AI_SETTINGS_MODEL_INVALID",
+            HttpStatus.BAD_REQUEST
+    ),
+    PROFILE_AI_SETTINGS_KEY_REQUIRED(
+            "새 연결 주소에 사용할 API 키를 입력해 주세요.",
+            "Profile AI settings key required",
+            "PROFILE_AI_SETTINGS_KEY_REQUIRED",
+            HttpStatus.BAD_REQUEST
+    ),
+    PROFILE_AI_SETTINGS_KEY_INVALID(
+            "API 키 형식을 확인해 주세요.",
+            "Profile AI settings key invalid",
+            "PROFILE_AI_SETTINGS_KEY_INVALID",
+            HttpStatus.BAD_REQUEST
+    ),
+    PROFILE_AI_SETTINGS_REQUIRED(
+            "AI 연결 설정을 먼저 저장해 주세요.",
+            "Profile AI settings required",
+            "PROFILE_AI_SETTINGS_REQUIRED",
+            HttpStatus.CONFLICT
+    ),
+    PROFILE_AI_SETTINGS_CHANGED(
+            "AI 연결 주소가 변경되었습니다. 연결 설정을 다시 확인해 주세요.",
+            "Profile AI provider URL changed",
+            "PROFILE_AI_SETTINGS_CHANGED",
+            HttpStatus.CONFLICT
+    ),
+    PROFILE_AI_PROVIDER_FAILED(
+            "AI 응답을 받지 못했습니다. 연결 설정을 확인하거나 다시 시도해 주세요.",
+            "Profile AI provider request failed",
+            "PROFILE_AI_PROVIDER_FAILED",
+            HttpStatus.BAD_GATEWAY
+    ),
+
     // 유효성 검사
     VALIDATION_FAILED(
             "필수 입력값이 누락되었습니다.",
@@ -78,6 +127,12 @@ public enum ErrorCode {
             "비밀번호 불일치 -> ID:{}",
             "PASSWORD_NOT_MATCH",
             HttpStatus.UNAUTHORIZED
+    ),
+    PASSWORD_CHANGED(
+            "비밀번호가 변경되었습니다. 현재 비밀번호를 다시 입력해 주세요.",
+            "Password already changed",
+            "PASSWORD_CHANGED",
+            HttpStatus.CONFLICT
     ),
 
     AUTHENTICATION_FAILED("인증에 실패하였습니다.", "AUTHENTICATION_FAILED", "AUTHENTICATION_FAILED",HttpStatus.UNAUTHORIZED),

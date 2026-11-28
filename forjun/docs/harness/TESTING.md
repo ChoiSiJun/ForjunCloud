@@ -9,7 +9,8 @@ powershell -NoProfile -File scripts/verify.ps1 -Suite full
 
 기본 `unit`은 HistoryServiceTest, PersonalImageTest, FileQueryServiceTest,
 LocalFileStorageAdapterTest, FileUploadServiceTest, HistoryRequestValidationTest,
-PageViewServiceTest를 선택한다.
+PageViewServiceTest, 프로필 요약 AI의 API, 서비스, 키 암호화, 제공자 어댑터 테스트 및
+계정 설정의 API와 서비스 테스트를 선택한다.
 현재 존재하는 DB 없는 검증의 고정 목록이다.
 테스트를 추가하면 목록을 함께 갱신하거나 향후 태그/별도 Gradle task로 분류한다.
 테스트 대상이 없으면 Gradle 실패를 그대로 반환한다. full은 모든 테스트를 실행한다.

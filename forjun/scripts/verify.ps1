@@ -19,9 +19,15 @@ try {
             'forjun.web.module.history.api.HistoryRequestValidationTest',
             'forjun.web.module.pageview.application.PageViewServiceTest',
             'forjun.web.module.personal.application.PersonalImageTest',
+            'forjun.web.module.profilesummary.api.ProfileAiApiTest',
+            'forjun.web.module.profilesummary.application.ProfileAiServiceTest',
+            'forjun.web.module.profilesummary.infrastructure.AesProfileAiKeyCipherTest',
+            'forjun.web.module.profilesummary.infrastructure.OpenAiProfileProviderTest',
             'forjun.web.module.system.application.FileQueryServiceTest',
             'forjun.web.module.system.application.FileUploadServiceTest',
-            'forjun.web.module.system.infrastructure.storage.LocalFileStorageAdapterTest'
+            'forjun.web.module.system.infrastructure.storage.LocalFileStorageAdapterTest',
+            'forjun.web.module.user.api.UserSettingsApiTest',
+            'forjun.web.module.user.application.UserSettingsServiceTest'
         )
         foreach ($testClass in $testClasses) {
             $gradleArguments += @('--tests', $testClass)

@@ -8,8 +8,8 @@ const userApiBase = '/user';
 export interface DuplicateIdCheckUserRequest extends Pick<User, 'userId'> {}
 export interface JoinUserRequest extends Pick<User, 'userId' | 'password' | 'userName' | 'email'> {}
 export interface LoginUserRequest extends Pick<User, 'userId' | 'password'> {}
-export interface UpdateUserRequest extends Pick<User, 'userName' | 'email' | 'historyPrivate' | 'personalPrivate'> {}
 export interface UserDetailResponse extends Pick<User, 'userName' | 'email' | 'historyPrivate' | 'personalPrivate'> {}
+export type Visibility = 'PUBLIC' | 'PRIVATE';
 
 // API endpoints
 export const USER_API_ENDPOINTS = {
@@ -37,9 +37,18 @@ export const USER_API_ENDPOINTS = {
     method: 'GET',
   }),
 
-  // 사용자 정보 수정
-  update: defineEndpoint<UpdateUserRequest, void>({
-    url: `/api/v1${  userApiBase}`,
+  updateProfile: defineEndpoint<Pick<User, 'userName' | 'email'>, void>({
+    url: `/api/v1${userApiBase}/profile`,
+    method: 'PATCH',
+  }),
+
+  updatePrivacy: defineEndpoint<{ historyPrivate: Visibility; personalPrivate: Visibility }, void>({
+    url: `/api/v1${userApiBase}/privacy`,
+    method: 'PATCH',
+  }),
+
+  updatePassword: defineEndpoint<{ currentPassword: string; newPassword: string }, void>({
+    url: `/api/v1${userApiBase}/password`,
     method: 'PUT',
   }),
 };

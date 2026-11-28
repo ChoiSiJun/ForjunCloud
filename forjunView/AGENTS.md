@@ -13,4 +13,5 @@
 - `powershell -NoProfile -File scripts/verify.ps1`로 lint·각 워크스페이스 타입·프로필 시나리오를 검증한다.
 - 서비스 빌드는 `-Suite full`, Storybook까지는 `-Suite full -Storybook`을 사용한다. 상세 범위는 `docs/harness/TESTING.md`에 있다.
 - UI 동작을 변경하면 관련 화면의 성공·실패·로딩 상태를 확인한다. 빌드 성공을 브라우저 검증으로 간주하지 않는다.
+- 기본 QA에서는 변경 동작과 영향받는 화면만 모의 API 응답으로 확인한다. 실제 백엔드 연동 통합 검증은 사용자가 별도로 요청할 때 실행한다.
 - 백엔드 계약이 필요하면 메인에 요청한다. 담당 범위 밖 파일을 임의 수정하거나 재위임하지 않는다.

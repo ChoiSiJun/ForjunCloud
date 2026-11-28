@@ -37,10 +37,10 @@ public interface UserApiMapper {
     UserInfoResponse toUserInfoResponse(User user);
 
     //유저 정보 수정
-    @Mapping(target = "userId", source = "userId")
+    @Mapping(target = "id", source = "id")
     @Mapping(target = "userName", source = "request.userName")
     @Mapping(target = "email", source = "request.email")
     @Mapping(target = "historyPrivate", source = "request.historyPrivate")
     @Mapping(target = "personalPrivate", source = "request.personalPrivate")
-    ChangeUserInfoCommand toChangeUserInfoCommand(String userId, UpdateUserInfoRequest request);
+    ChangeUserInfoCommand toChangeUserInfoCommand(Long id, UpdateUserInfoRequest request);
 }

@@ -12,6 +12,7 @@ import useAuth from '@domain/user/hooks/useAuth';
 
 // Types
 import { JoinUserRequest } from '@domain/user/api/userApi';
+import { passwordPattern, passwordRequirements } from '@domain/user/user';
 
 // Props Interface
 interface JoinProps {
@@ -41,7 +42,7 @@ export default function Join({ joinOpen, handleJoin }: JoinProps) {
       userId: Yup.string().required('아이디는 필수 항목입니다.'),
       password: Yup.string()
         .required('비밀번호는 필수 항목입니다.')
-        .matches(/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/, '비밀번호는 최소 8자 이상이며, 영문 대소문자, 숫자, 특수문자를 모두 포함해야 합니다.'),
+        .matches(passwordPattern, passwordRequirements),
       userName: Yup.string().required('이름은 필수 항목입니다.'),
       email: Yup.string().email('이메일 형식이 아닙니다.').required('이메일은 필수 항목입니다.'),
     }),

@@ -3,11 +3,22 @@ package forjun.web.module.user.application.port.out;
 import forjun.web.module.user.domain.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserJpaPort {
 
-    //유저 저장 및 수정
+    //유저 가입
     public void saveUser(User user);
+
+    int updateMetadata(long id, String userName, String email, String historyPrivate, String personalPrivate);
+
+    int updateProfile(long id, String userName, String email);
+
+    int updatePrivacy(long id, String historyPrivate, String personalPrivate);
+
+    Optional<String> findPasswordHash(long id);
+
+    int updatePasswordIfUnchanged(long id, String oldHash, String newHash);
 
     //유저 삭제
     public void deleteUser(Long id);

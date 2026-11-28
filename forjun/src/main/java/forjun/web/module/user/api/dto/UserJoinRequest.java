@@ -1,5 +1,6 @@
 package forjun.web.module.user.api.dto;
 
+import forjun.web.module.user.domain.UserPasswordPolicy;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
@@ -16,7 +17,7 @@ public class UserJoinRequest {
     private String userName;
 
     @NotBlank(message = "비밀번호는 필수 항목입니다.")
-    @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?]).{8,}$",
+    @Pattern(regexp = UserPasswordPolicy.FORMAT,
             message = "비밀번호는 최소 8자 이상이어야 하며, 영문 대소문자, 숫자, 특수문자를 모두 포함해야 합니다.")
     private String password;
 

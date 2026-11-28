@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -20,6 +21,31 @@ public class UserJpaAdapter implements UserJpaPort {
     @Override
     public void saveUser(User user) {
         userRepo.save(userJpaMapper.toEntity(user));
+    }
+
+    @Override
+    public int updateMetadata(long id, String userName, String email, String historyPrivate, String personalPrivate) {
+        return userRepo.updateMetadata(id, userName, email, historyPrivate, personalPrivate);
+    }
+
+    @Override
+    public int updateProfile(long id, String userName, String email) {
+        return userRepo.updateProfile(id, userName, email);
+    }
+
+    @Override
+    public int updatePrivacy(long id, String historyPrivate, String personalPrivate) {
+        return userRepo.updatePrivacy(id, historyPrivate, personalPrivate);
+    }
+
+    @Override
+    public Optional<String> findPasswordHash(long id) {
+        return userRepo.findPasswordHash(id);
+    }
+
+    @Override
+    public int updatePasswordIfUnchanged(long id, String oldHash, String newHash) {
+        return userRepo.updatePasswordIfUnchanged(id, oldHash, newHash);
     }
 
     @Override

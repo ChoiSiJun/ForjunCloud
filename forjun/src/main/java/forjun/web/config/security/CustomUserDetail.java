@@ -11,6 +11,7 @@ import java.util.List;
 @Builder
 public class CustomUserDetail implements UserDetails {
 
+    @Getter
     private Long id;
 
     @Getter

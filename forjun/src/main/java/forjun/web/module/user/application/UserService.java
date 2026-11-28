@@ -6,6 +6,9 @@ import forjun.web.module.user.application.port.in.UserQuery;
 import forjun.web.module.user.application.port.in.UserUsecase;
 import forjun.web.module.user.application.port.in.dto.AuthenticationUserQuery;
 import forjun.web.module.user.application.port.in.dto.ChangeUserInfoCommand;
+import forjun.web.module.user.application.port.in.dto.ChangeUserPasswordCommand;
+import forjun.web.module.user.application.port.in.dto.ChangeUserPrivacyCommand;
+import forjun.web.module.user.application.port.in.dto.ChangeUserProfileCommand;
 import forjun.web.module.user.application.port.in.dto.DeleteUserCommand;
 import forjun.web.module.user.application.port.in.dto.ExistUserCheckByUserIdQuery;
 import forjun.web.module.user.application.port.in.dto.GetUserInfoByUserIdQuery;
@@ -13,6 +16,7 @@ import forjun.web.module.user.application.port.in.dto.GetUserInfoQuery;
 import forjun.web.module.user.application.port.in.dto.JoinUserCommand;
 import forjun.web.module.user.application.port.out.UserJpaPort;
 import forjun.web.module.user.domain.User;
+import forjun.web.module.user.domain.UserPasswordPolicy;
 import forjun.web.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,6 +31,7 @@ public class UserService implements UserQuery, UserUsecase {
 
     private final UserJpaPort userJpaPort;
     private final JwtUtil jwtUtil;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     //유저 저장
     @Override
@@ -59,27 +64,45 @@ public class UserService implements UserQuery, UserUsecase {
 
     @Override
     public void changeUserInfo(ChangeUserInfoCommand command) {
+        requireUpdated(userJpaPort.updateMetadata(command.id(), command.userName(), command.email(),
+                command.historyPrivate(), command.personalPrivate()), command.id());
+    }
 
-        //기존 가입정보 있는지 확인 (userId로 조회)
-        User existingUser = userJpaPort.getUserByUserId(command.userId());
-        if(existingUser == null){
-            throw AppException.of(ErrorCode.USER_NOT_FOUND, command.userId());
+    @Override
+    public void changeUserProfile(ChangeUserProfileCommand command) {
+        requireUpdated(userJpaPort.updateProfile(command.id(), command.userName(), command.email()), command.id());
+    }
+
+    @Override
+    public void changeUserPrivacy(ChangeUserPrivacyCommand command) {
+        requireUpdated(userJpaPort.updatePrivacy(command.id(), command.historyPrivate().name(),
+                command.personalPrivate().name()), command.id());
+    }
+
+    @Override
+    public void changeUserPassword(ChangeUserPasswordCommand command) {
+        if (command.currentPassword() == null || command.currentPassword().isEmpty()
+                || !UserPasswordPolicy.acceptsNewPassword(command.newPassword())) {
+            throw AppException.of(ErrorCode.VALIDATION_FAILED, "user password change");
         }
+        String oldHash = userJpaPort.findPasswordHash(command.id())
+                .orElseThrow(() -> AppException.of(ErrorCode.USER_NOT_FOUND, command.id()));
+        if (!passwordEncoder.matches(command.currentPassword(), oldHash)) {
+            throw AppException.of(ErrorCode.PASSWORD_NOT_MATCH, command.id());
+        }
+        if (passwordEncoder.matches(command.newPassword(), oldHash)) {
+            throw AppException.of(ErrorCode.VALIDATION_FAILED, "new password matches current password");
+        }
+        String newHash = passwordEncoder.encode(command.newPassword());
+        if (userJpaPort.updatePasswordIfUnchanged(command.id(), oldHash, newHash) != 1) {
+            throw AppException.of(ErrorCode.PASSWORD_CHANGED);
+        }
+    }
 
-        //기존 정보를 유지하면서 수정할 필드만 업데이트
-        User updatedUser = User.builder()
-                .id(existingUser.getId())
-                .userId(existingUser.getUserId())
-                .password(existingUser.getPassword())
-                .userName(command.userName())
-                .email(command.email())
-                .authority(existingUser.getAuthority())
-                .historyPrivate(command.historyPrivate())
-                .personalPrivate(command.personalPrivate())
-                .build();
-
-        //유저 정보 수정
-        userJpaPort.saveUser(updatedUser);
+    private static void requireUpdated(int count, long id) {
+        if (count != 1) {
+            throw AppException.of(ErrorCode.USER_NOT_FOUND, id);
+        }
     }
 
     @Override
@@ -118,10 +141,6 @@ public class UserService implements UserQuery, UserUsecase {
         if (user == null) {
             throw AppException.of(ErrorCode.USER_NOT_FOUND, query.userId());
         }
-
-        //패스워드 일치 체크
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
 
         if(!passwordEncoder.matches(query.password(), user.getPassword())){
             throw AppException.of(ErrorCode.PASSWORD_NOT_MATCH, query.userId());

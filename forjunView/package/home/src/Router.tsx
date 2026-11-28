@@ -13,6 +13,10 @@ const Personal = lazy(() => import('@pages/personal'));
 const ProfileSummary = lazy(() => import('@pages/profile-summary'));
 const PublicProfileSummary = lazy(() => import('@pages/web/profile-summary'));
 const UserEdit = lazy(() => import('@pages/user/edit'));
+const UserSettings = lazy(() => import('@pages/user/settings'));
+const UserPasswordSettings = lazy(() => import('@pages/user/settings/password'));
+const UserAiSettings = lazy(() => import('@pages/user/settings/ai'));
+const UserPrivacySettings = lazy(() => import('@pages/user/settings/privacy'));
 const ErrorPage = lazy(() => import('@pages/error'));
 const OpenPersonal = lazy(() => import('@pages/web/personal'));
 const SiHistory = lazy(() => import('@pages/history/si').then(module => ({ default: module.SiHistory })));
@@ -36,6 +40,10 @@ const ForjunRouter = () => (
           <Route path="personal-statement" element={<Personal />} />
           <Route path="profile-summary" element={<ProfileSummary />} />
           <Route path="user/edit" element={<UserEdit />} />
+          <Route path="user/settings" element={<UserSettings />} />
+          <Route path="user/settings/password" element={<UserPasswordSettings />} />
+          <Route path="user/settings/ai" element={<UserAiSettings />} />
+          <Route path="user/settings/privacy" element={<UserPrivacySettings />} />
           <Route path="history/si" element={<SiHistory />} />
           <Route path="history/sm" element={<SmHistory />} />
           <Route path="history/rnd" element={<RndHistory />} />

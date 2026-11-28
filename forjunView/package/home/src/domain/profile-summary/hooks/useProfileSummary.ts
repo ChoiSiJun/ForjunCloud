@@ -3,6 +3,7 @@ import { useAppSelector } from 'store/ReduxHooks';
 import { fetchHistoryList } from '@domain/history/api/useHistoyListQuery';
 import { fetchPersonal } from '@domain/personal/api/usePersonalQuery';
 import { useOwnSummaryQuery, usePublishedSummaryQuery, useSaveSummaryMutation } from '../api/useProfileSummaryQueries';
+import { useAiSettingsQuery, useGenerateAiSummaryMutation } from '../api/useAiSummaryQueries';
 
 const categories = ['SI', 'SM', 'RND', 'TOY'];
 
@@ -31,7 +32,14 @@ async function buildPrompt() {
 
 export function useProfileSummary() {
   const userId = useAppSelector(state => state.Auth.userId);
-  return { userId, summary: useOwnSummaryQuery(userId), save: useSaveSummaryMutation(userId), prompt: useMutation(buildPrompt) };
+  return {
+    userId,
+    summary: useOwnSummaryQuery(userId),
+    save: useSaveSummaryMutation(userId),
+    prompt: useMutation(buildPrompt),
+    aiSettings: useAiSettingsQuery(userId),
+    generate: useGenerateAiSummaryMutation(),
+  };
 }
 
 export const usePublicProfileSummary = (userId: string) => usePublishedSummaryQuery(userId);

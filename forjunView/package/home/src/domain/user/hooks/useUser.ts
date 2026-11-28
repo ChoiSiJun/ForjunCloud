@@ -1,81 +1,58 @@
-import { useMemo } from 'react';
-import { useQueryClient } from 'react-query';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import useUserQuery from '@domain/user/api/useUserQuery';
-import { useUpdateUserMutation } from '@domain/user/api/useUpdateUserMutation';
-import { UserDetailResponse } from '@domain/user/api/userApi';
 import { toast } from 'react-toastify';
-import { useAppSelector } from '@store/ReduxHooks';
-
-export interface UserInfoFormValues {
-  userName: string;
-  email: string;
-  historyPrivate: string;
-  personalPrivate: string;
-}
-
-const FormValuesConvert = (userData: UserDetailResponse | undefined): UserInfoFormValues => {
-  if (!userData) {
-    return {
-      userName: '',
-      email: '',
-      historyPrivate: 'PUBLIC',
-      personalPrivate: 'PUBLIC',
-    } as UserInfoFormValues;
-  }
-
-  return {
-    userName: userData.userName || '',
-    email: userData.email || '',
-    historyPrivate: userData.historyPrivate || 'PUBLIC',
-    personalPrivate: userData.personalPrivate || 'PUBLIC',
-  } as UserInfoFormValues;
-};
+import useUserQuery from '../api/useUserQuery';
+import { useUpdatePrivacyMutation, useUpdateProfileMutation } from '../api/useUserSettingsMutations';
+import { Visibility } from '../api/userApi';
 
 const useUser = () => {
-  /** Query Client */
-  const queryClient = useQueryClient();
-
-  /** 로그인 상태 확인 */
-  const jwtToken = useAppSelector(state => state.Auth.jwtToken);
-  const isLoggedIn = !!jwtToken;
-
-  /** 사용자 정보 조회 (로그인 상태일 때만 실행) */
-  const userData = useUserQuery(isLoggedIn).data;
-
-  /** 사용자 정보 수정 뮤테이션 */
-  const { mutateAsync: updateUserMutation } = useUpdateUserMutation();
-
-  /** 사용자 정보 Form 데이터 변환 */
-  const loadedData = useMemo(() => {
-    return FormValuesConvert(userData);
-  }, [userData]);
-
-  /** 사용자 정보 수정 Form */
-  const userInfoFormik = useFormik<UserInfoFormValues>({
-    initialValues: loadedData,
+  const user = useUserQuery();
+  const update = useUpdateProfileMutation();
+  const form = useFormik({
+    initialValues: { userName: user.data?.userName ?? '', email: user.data?.email ?? '' },
     enableReinitialize: true,
     validationSchema: Yup.object({
-      userName: Yup.string().required('이름은 필수 항목입니다.'),
-      email: Yup.string().email('이메일 형식이 아닙니다.').required('이메일은 필수 항목입니다.'),
-      historyPrivate: Yup.string().required('히스토리 공개 설정은 필수 항목입니다.'),
-      personalPrivate: Yup.string().required('자기소개서 공개 설정은 필수 항목입니다.'),
+      userName: Yup.string().trim().max(255, '이름은 255자 이내로 입력해 주세요.').required('이름은 필수 항목입니다.'),
+      email: Yup.string().trim().max(255, '이메일은 255자 이내로 입력해 주세요.').email('이메일 형식이 아닙니다.').required('이메일은 필수 항목입니다.'),
     }),
-    onSubmit: async values => {
+    onSubmit: async (values, { resetForm }) => {
+      if (!user.data) return;
+      const profile = { userName: values.userName.trim(), email: values.email.trim() };
       try {
-        await updateUserMutation(values);
-        queryClient.invalidateQueries(['user']);
+        await update.mutateAsync(profile);
+        resetForm({ values: profile });
         toast.success('개인정보가 수정되었습니다.');
-      } catch (error) {
-        // 에러는 mutation에서 처리됨
+      } catch {
+        toast.error('개인정보를 수정하지 못했습니다. 이름과 이메일을 확인한 뒤 다시 시도해 주세요.');
       }
     },
   });
 
-  return {
-    userInfoFormik,
-  };
+  return { user, form };
 };
+
+export function usePrivacySettings() {
+  const user = useUserQuery();
+  const update = useUpdatePrivacyMutation();
+  const form = useFormik<{ historyPrivate: Visibility; personalPrivate: Visibility }>({
+    initialValues: {
+      historyPrivate: user.data?.historyPrivate === 'PUBLIC' ? 'PUBLIC' : 'PRIVATE',
+      personalPrivate: user.data?.personalPrivate === 'PUBLIC' ? 'PUBLIC' : 'PRIVATE',
+    },
+    enableReinitialize: true,
+    onSubmit: async (values, { resetForm }) => {
+      if (!user.data) return;
+      try {
+        await update.mutateAsync(values);
+        resetForm({ values });
+        toast.success('권한 설정을 저장했습니다.');
+      } catch {
+        toast.error('권한 설정을 저장하지 못했습니다. 다시 시도해 주세요.');
+      }
+    },
+  });
+
+  return { user, form };
+}
 
 export default useUser;

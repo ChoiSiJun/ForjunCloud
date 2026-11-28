@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import MenuIcon from '@mui/icons-material/Menu';
-import EditIcon from '@mui/icons-material/Edit';
+import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
@@ -61,8 +61,8 @@ const HeaderBar = ({ title, headerBarHeight, sidebarWidth, setSidebarOpen, isSid
     }
   };
 
-  const handleEditClick = () => {
-    navigate('/forjun/user/edit');
+  const handleSettingsClick = () => {
+    navigate('/forjun/user/settings');
   };
 
   return (
@@ -92,9 +92,9 @@ const HeaderBar = ({ title, headerBarHeight, sidebarWidth, setSidebarOpen, isSid
         <Typography component="h1" variant="h4" color="inherit" noWrap sx={{ flexGrow: 1 }}>
           {title}
         </Typography>
-        <Tooltip title="개인정보 수정">
-          <IconButton color="inherit" onClick={handleEditClick} aria-label="개인정보 수정">
-            <EditIcon />
+        <Tooltip title="개인정보 설정">
+          <IconButton color="inherit" onClick={handleSettingsClick} aria-label="개인정보 설정">
+            <SettingsIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="로그아웃">

@@ -9,6 +9,17 @@ export interface ProfileSummary extends ProfileSummaryDraft {
   published: boolean;
 }
 
+export interface AiSettings {
+  baseUrl: string;
+  model: string;
+  hasApiKey: boolean;
+}
+
+export interface AiGeneration extends ProfileSummaryDraft {
+  resumeSummary: string;
+  swot: Record<'strengths' | 'weaknesses' | 'opportunities' | 'threats', string[]>;
+}
+
 export const emptySummary: ProfileSummary = {
   headline: '',
   strengths: [],
