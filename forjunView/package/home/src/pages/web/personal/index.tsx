@@ -1,52 +1,59 @@
-import { Box, Avatar, Typography, Paper, Grid, Chip, Stack, Divider, alpha, useTheme } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useEffect, useRef } from 'react';
+import { Alert, Avatar, Box, Button, Chip, CircularProgress, Divider, Grid, Paper, Stack, Typography, alpha, useTheme } from '@mui/material';
+import { useLocation, useParams } from 'react-router-dom';
 import { Work as WorkIcon, School as SchoolIcon, EmojiEvents as AwardIcon, Verified as CertificateIcon, Code as CodeIcon, Person as PersonIcon } from '@mui/icons-material';
 import usePublicPersonal from '@domain/personal/hooks/usePublicPersonal';
 import useRecordPublicPageView from '@domain/pageview/hooks/useRecordPublicPageView';
+import { usePublicProfileSummary } from '@domain/profile-summary/hooks/useProfileSummary';
 import WepContentBox from '@pages/web/components/WebContentBox';
+import PublicProfileSummary from '@pages/web/profile-summary';
 
 const OpenPersonal = () => {
   const { userId } = useParams();
-  const { data: personalData, isLoading, isError, isFetchedAfterMount } = usePublicPersonal(userId || '');
-  useRecordPublicPageView(userId, 'PERSONAL', isFetchedAfterMount && !isError && Boolean(personalData));
+  const { hash } = useLocation();
+  const personal = usePublicPersonal(userId || '');
+  const summary = usePublicProfileSummary(userId || '');
+  const summaryRef = useRef<HTMLDivElement>(null);
+  const isLoading = personal.isLoading || (!personal.isFetchedAfterMount && personal.isFetching);
+  const isError = personal.isFetchedAfterMount && personal.isError;
+  const personalData = personal.isFetchedAfterMount && personal.isSuccess ? personal.data : undefined;
+  const summaryLoading = summary.isLoading || (!summary.isFetchedAfterMount && summary.isFetching);
+  const summaryError = summary.isFetchedAfterMount && summary.isError;
+  const publishedSummary = summary.isFetchedAfterMount && summary.isSuccess && summary.data?.published ? summary.data : undefined;
+  const requestedSummary = hash === '#profile-summary';
+  useRecordPublicPageView(userId, 'PERSONAL', Boolean(personalData));
   const theme = useTheme();
 
-  if (isLoading) {
-    return (
-      <WepContentBox color="#000" bgColor="#f5f7fa">
-        <Box
-          sx={{
-            display: 'flex',
-            height: '100%',
-            minHeight: '400px',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Typography variant="h6" color="text.secondary">
-            프로필 정보를 불러오는 중...
-          </Typography>
-        </Box>
-      </WepContentBox>
-    );
-  }
+  useEffect(() => {
+    if (requestedSummary) summaryRef.current?.scrollIntoView({ block: 'start' });
+  }, [requestedSummary, isLoading, isError, summaryLoading, summaryError, publishedSummary]);
 
-  if (isError || !personalData) {
+  const summarySection = (publishedSummary || summaryLoading || summaryError || requestedSummary) && (
+    <Box id="profile-summary" ref={summaryRef} sx={{ gridColumn: '1 / -1' }}>
+      {publishedSummary && <PublicProfileSummary data={publishedSummary} />}
+      {summaryLoading && <CircularProgress size={24} aria-label="프로필 요약 불러오는 중" />}
+      {summaryError && (
+        <Alert severity="error" action={<Button color="inherit" disabled={summary.isFetching} onClick={() => summary.refetch()}>다시 시도</Button>}>
+          프로필 요약을 불러오지 못했습니다.
+        </Alert>
+      )}
+      {requestedSummary && summary.isFetchedAfterMount && summary.isSuccess && !publishedSummary && (
+        <Typography color="text.secondary">공개된 프로필 요약이 없습니다.</Typography>
+      )}
+    </Box>
+  );
+
+  if (isLoading || isError || !personalData) {
     return (
       <WepContentBox color="#000" bgColor="#f5f7fa">
-        <Box
-          sx={{
-            display: 'flex',
-            height: '100%',
-            minHeight: '400px',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Typography variant="h6" color="error">
-            프로필 정보를 불러올 수 없습니다.
-          </Typography>
-        </Box>
+        <Stack spacing={2} sx={{ width: '90%', maxWidth: 1200, py: { xs: 3, md: 5 } }}>
+          {summarySection}
+          {isLoading && <Typography role="status" color="text.secondary">프로필 정보를 불러오는 중...</Typography>}
+          {!isLoading && isError && <Alert severity="error">프로필 정보를 불러올 수 없습니다.</Alert>}
+          {!isLoading && !isError && !publishedSummary && !summaryLoading && (
+            <Typography color="text.secondary">공개된 자기소개서가 없습니다.</Typography>
+          )}
+        </Stack>
       </WepContentBox>
     );
   }
@@ -70,27 +77,19 @@ const OpenPersonal = () => {
         sx={{
           width: { xs: '95%', sm: '90%', md: '85%', lg: '1200px' },
           maxWidth: 1200,
-          display: 'flex',
-          flexDirection: { xs: 'column', lg: 'row' },
+          display: 'grid',
+          gridTemplateColumns: { xs: 'minmax(0, 1fr)', lg: '320px minmax(0, 1fr)' },
+          alignItems: 'start',
           gap: 4,
           py: { xs: 3, md: 5 },
         }}
       >
-        {/* 좌측 사이드바 - 프로필 카드 */}
-        <Box
-          sx={{
-            width: { xs: '100%', lg: '320px' },
-            flexShrink: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 3,
-          }}
-        >
           {/* 프로필 카드 */}
           <Paper
             elevation={0}
             sx={{
               p: 4,
+              gridColumn: '1 / -1',
               background: `linear-gradient(135deg, ${theme.palette?.primary?.main || '#21438f'} 0%, ${theme.palette?.primary?.dark || '#152548'} 100%)`,
               borderRadius: 3,
               color: 'white',
@@ -129,6 +128,7 @@ const OpenPersonal = () => {
                 }}
               />
               <Typography
+                component="h1"
                 variant="h4"
                 sx={{
                   fontWeight: 700,
@@ -151,6 +151,8 @@ const OpenPersonal = () => {
               </Typography>
             </Box>
           </Paper>
+
+          {summarySection}
 
           {/* 기본 정보 카드 */}
           <Paper
@@ -195,8 +197,6 @@ const OpenPersonal = () => {
               )}
             </Stack>
           </Paper>
-        </Box>
-
         {/* 메인 컨텐츠 영역 */}
         <Box
           sx={{

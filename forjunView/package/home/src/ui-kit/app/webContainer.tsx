@@ -18,9 +18,7 @@ export default function WebContainer() {
   const basePath = location.pathname.startsWith('/forjun/web') ? '/forjun/web' : '/web';
 
   useEffect(() => {
-    if (location.pathname.includes('/personal')) {
-      setActiveTab('PERSONAL');
-    } else if (location.pathname.includes('/history/si')) {
+    if (location.pathname.includes('/history/si')) {
       setActiveTab('SI');
     } else if (location.pathname.includes('/history/sm')) {
       setActiveTab('SM');
@@ -28,6 +26,8 @@ export default function WebContainer() {
       setActiveTab('RND');
     } else if (location.pathname.includes('/history/toy')) {
       setActiveTab('TOY');
+    } else {
+      setActiveTab('PERSONAL');
     }
   }, [location.pathname]);
 
@@ -72,14 +72,6 @@ export default function WebContainer() {
               display: 'inline-flex',
             }}
           >
-            <Button
-              onClick={() => navigate(`${basePath}/${userId}/profile/summary`)}
-              aria-current={location.pathname.endsWith('/summary') ? 'page' : undefined}
-              variant={location.pathname.endsWith('/summary') ? 'contained' : 'text'}
-              sx={{ flexShrink: 0 }}
-            >
-              프로필 요약
-            </Button>
             <Button
               onClick={() => {
                 setActiveTab('PERSONAL');

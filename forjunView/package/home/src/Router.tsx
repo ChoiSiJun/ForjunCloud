@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import ProtectedRoute from './routing/ProtectedRoute';
 import RouteLoadingFallback from './routing/RouteLoadingFallback';
@@ -10,8 +10,6 @@ const WebContainer = lazy(() => import('@ui-kit/app/webContainer'));
 const Auth = lazy(() => import('@pages/auth'));
 const Dashboard = lazy(() => import('@pages/dashboard'));
 const Personal = lazy(() => import('@pages/personal'));
-const ProfileSummary = lazy(() => import('@pages/profile-summary'));
-const PublicProfileSummary = lazy(() => import('@pages/web/profile-summary'));
 const UserEdit = lazy(() => import('@pages/user/edit'));
 const UserSettings = lazy(() => import('@pages/user/settings'));
 const UserPasswordSettings = lazy(() => import('@pages/user/settings/password'));
@@ -38,7 +36,7 @@ const ForjunRouter = () => (
           <Route index element={<Personal />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="personal-statement" element={<Personal />} />
-          <Route path="profile-summary" element={<ProfileSummary />} />
+          <Route path="profile-summary" element={<Navigate replace to="../personal-statement#profile-summary" />} />
           <Route path="user/edit" element={<UserEdit />} />
           <Route path="user/settings" element={<UserSettings />} />
           <Route path="user/settings/password" element={<UserPasswordSettings />} />
@@ -53,7 +51,7 @@ const ForjunRouter = () => (
       <Route path="web/:userId/profile" element={<WebContainer />}>
         <Route index element={<OpenPersonal />} />
         <Route path="personal" element={<OpenPersonal />} />
-        <Route path="summary" element={<PublicProfileSummary />} />
+        <Route path="summary" element={<Navigate replace to="../personal#profile-summary" />} />
         <Route path="history/si" element={<OpenSiHistory />} />
         <Route path="history/sm" element={<OpenSmHistory />} />
         <Route path="history/rnd" element={<OpenRndHistory />} />

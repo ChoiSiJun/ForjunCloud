@@ -9,11 +9,6 @@ export const CAREER = [
         menuName: 'PersonalStatement',
         menuPath: '/forjun/personal-statement',
       },
-      {
-        menuCode: 'CAREER_PROFILE_SUMMARY',
-        menuName: 'Profile Summary',
-        menuPath: '/forjun/profile-summary',
-      },
     ],
   },
   {

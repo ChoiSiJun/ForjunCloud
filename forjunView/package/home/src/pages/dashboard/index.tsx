@@ -1,20 +1,83 @@
-import { Alert, Box, Button, Chip, Paper, Skeleton, Stack, Typography, useTheme } from '@mui/material';
+import { useState } from 'react';
+import { Alert, Box, Button, Chip, Paper, Skeleton, Stack, TextField, Typography, useTheme } from '@mui/material';
+import ContentCopyRounded from '@mui/icons-material/ContentCopyRounded';
+import OpenInNewRounded from '@mui/icons-material/OpenInNewRounded';
 import { LineChart } from '@mui/x-charts/LineChart';
-import { Link } from 'react-router-dom';
+import { Link, useHref } from 'react-router-dom';
 import useDashboardPageViews from '@domain/pageview/hooks/useDashboardPageViews';
+import useUserQuery from '@domain/user/api/useUserQuery';
+import { useAppSelector } from 'store/ReduxHooks';
 
 const historyLinks = [
-  { title: 'SI', to: '/forjun/history/si' },
-  { title: 'SM', to: '/forjun/history/sm' },
-  { title: 'R&D', to: '/forjun/history/rnd' },
-  { title: '토이 프로젝트', to: '/forjun/history/toy' },
+  { title: 'SI', path: 'history/si' },
+  { title: 'SM', path: 'history/sm' },
+  { title: 'R&D', path: 'history/rnd' },
+  { title: '토이 프로젝트', path: 'history/toy' },
 ];
 
 const countFormat = new Intl.NumberFormat('ko-KR');
 
+function ContentActions({ title, manageTo, visitorTo, primary = false }: {
+  title: string;
+  manageTo: string;
+  visitorTo?: string;
+  primary?: boolean;
+}) {
+  const href = useHref(visitorTo ?? manageTo);
+  const [copyResult, setCopyResult] = useState<{ url: string; copied: boolean }>();
+
+  const copyLink = async () => {
+    const url = new URL(href, window.location.origin).href;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopyResult({ url, copied: true });
+    } catch {
+      setCopyResult({ url, copied: false });
+    }
+  };
+
+  return (
+    <Stack spacing={1} sx={{ minWidth: 0 }}>
+      <Stack direction="row" spacing={0.5} useFlexGap flexWrap="wrap" alignItems="center"
+        sx={{ '& .MuiButton-root': { minHeight: { xs: 40, md: 32 } } }}>
+        <Button component={Link} to={manageTo} variant={primary ? 'contained' : 'outlined'}
+          size={primary ? 'medium' : 'small'} aria-label={`${title} ${primary ? '수정' : '관리'}`}>
+          {primary ? '수정' : '관리'}
+        </Button>
+        {visitorTo && (
+          <>
+            <Button component={Link} to={visitorTo} target="_blank" rel="noopener noreferrer" size="small"
+              startIcon={<OpenInNewRounded />} aria-label={`${title} 방문자 화면 보기`}>
+              방문자 화면
+            </Button>
+            <Button onClick={copyLink} size="small" startIcon={<ContentCopyRounded />} aria-label={`${title} 링크 복사`}>
+              링크 복사
+            </Button>
+          </>
+        )}
+      </Stack>
+      {visitorTo && copyResult?.copied && <Typography role="status" variant="body2">링크를 복사했습니다.</Typography>}
+      {visitorTo && copyResult && !copyResult.copied && (
+        <>
+          <Alert severity="warning">자동 복사가 되지 않았습니다. 아래 주소를 직접 복사해 주세요.</Alert>
+          <TextField label={`${title} 방문자 주소`} value={copyResult.url} size="small" fullWidth
+            inputProps={{ readOnly: true }} onFocus={event => event.target.select()} />
+        </>
+      )}
+    </Stack>
+  );
+}
+
 export default function Dashboard() {
   const theme = useTheme();
   const { data, isLoading, isError, isFetching, refetch } = useDashboardPageViews();
+  const userId = useAppSelector(state => state.Auth.userId);
+  const user = useUserQuery(Boolean(userId));
+  const visitorProfile = `/web/${encodeURIComponent(userId)}/profile`;
+  const hasPrivacy = Boolean(user.data) && !user.isError;
+  const personalPublic = user.data?.personalPrivate === 'PUBLIC';
+  const historyPublic = user.data?.historyPrivate === 'PUBLIC';
+  const canShareHistory = hasPrivacy && historyPublic;
   const totals = data?.reduce(
     (sum, day) => ({ personal: sum.personal + day.personalViews, history: sum.history + day.historyViews }),
     { personal: 0, history: 0 },
@@ -82,17 +145,55 @@ export default function Dashboard() {
           )}
         </Paper>
 
-        <Paper component="section" variant="outlined" aria-labelledby="manage-content-title" sx={{ borderRadius: 3, p: { xs: 2, md: 3 } }}>
-          <Typography id="manage-content-title" component="h3" variant="h6" fontWeight={700} sx={{ mb: 2 }}>
-            내 콘텐츠 관리
-          </Typography>
-          <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" alignItems="center">
-            <Button component={Link} to="/forjun/personal" variant="contained">자기소개서 수정</Button>
-            {historyLinks.map(({ title, to }) => (
-              <Button key={to} component={Link} to={to} variant="outlined">{title} 경력 관리</Button>
-            ))}
+        <Stack component="section" aria-labelledby="manage-content-title" spacing={2}>
+          <Stack direction="row" spacing={1} useFlexGap flexWrap="wrap" alignItems="center" justifyContent="space-between">
+            <Typography id="manage-content-title" component="h3" variant="h6" fontWeight={700}>
+              내 콘텐츠 관리
+            </Typography>
+            {hasPrivacy && <Button component={Link} to="/forjun/user/settings/privacy" size="small" sx={{ minHeight: { xs: 40, md: 32 } }}>공개 설정</Button>}
           </Stack>
-        </Paper>
+          {user.isError && (
+            <Alert severity="error" action={<Button color="inherit" disabled={user.isFetching} onClick={() => user.refetch()}>다시 시도</Button>}>
+              공개 설정을 불러오지 못했습니다.
+            </Alert>
+          )}
+          {user.isLoading && <Skeleton role="status" aria-label="공개 설정 불러오는 중" sx={{ maxWidth: 160 }} />}
+          <Box sx={{ display: 'grid', gridTemplateColumns: { xs: 'minmax(0, 1fr)', md: 'minmax(0, 2fr) minmax(0, 3fr)' }, gap: 2, alignItems: 'start' }}>
+            <Paper component="section" aria-labelledby="manage-personal-title" variant="outlined" sx={{ borderRadius: 3, p: { xs: 2, md: 2.5 } }}>
+              <Stack spacing={2}>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Typography id="manage-personal-title" component="h4" fontWeight={700}>자기소개서</Typography>
+                  {hasPrivacy && <Chip label={personalPublic ? '공개' : '비공개'} color={personalPublic ? 'success' : 'default'} variant="outlined" size="small" />}
+                </Stack>
+                <ContentActions key={visitorProfile} title="자기소개서" manageTo="/forjun/personal-statement"
+                  visitorTo={hasPrivacy && personalPublic ? `${visitorProfile}/personal` : undefined} primary />
+              </Stack>
+            </Paper>
+            <Paper component="section" aria-labelledby="manage-history-title" variant="outlined" sx={{ borderRadius: 3, p: { xs: 2, md: 2.5 } }}>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Typography id="manage-history-title" component="h4" fontWeight={700}>경력</Typography>
+                {hasPrivacy && <Chip label={historyPublic ? '공개' : '비공개'} color={historyPublic ? 'success' : 'default'} variant="outlined" size="small" />}
+              </Stack>
+              <Box component="ul" sx={{ m: 0, mt: 1.5, p: 0, listStyle: 'none' }}>
+                {historyLinks.map(({ title, path }) => (
+                  <Box component="li" key={`${visitorProfile}/${path}`} sx={{
+                    display: 'grid',
+                    gridTemplateColumns: {
+                      xs: canShareHistory ? 'minmax(0, 1fr)' : 'minmax(0, 1fr) auto',
+                      sm: canShareHistory ? 'minmax(90px, auto) minmax(0, 1fr)' : 'minmax(0, 1fr) auto',
+                    },
+                    alignItems: 'start', rowGap: 0.5, columnGap: 1, py: 1,
+                    borderTop: 1, borderColor: 'divider', '&:last-child': { pb: 0 },
+                  }}>
+                    <Typography variant="body2" fontWeight={600} sx={{ pt: 0.5 }}>{title}</Typography>
+                    <ContentActions title={`${title} 경력`} manageTo={`/forjun/${path}`}
+                      visitorTo={canShareHistory ? `${visitorProfile}/${path}` : undefined} />
+                  </Box>
+                ))}
+              </Box>
+            </Paper>
+          </Box>
+        </Stack>
       </Stack>
     </Box>
   );
